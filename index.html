@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Dashboard IoT Akuaponik</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -24,11 +24,32 @@
             --manual-color: #ff9800;
         }
 
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
             padding-top: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Responsive padding untuk container */
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            body {
+                padding-top: 10px;
+            }
         }
 
         .dashboard-header {
@@ -41,7 +62,21 @@
             animation: slideInDown 0.8s ease-out;
         }
 
-        /* Status Indicators Positioning */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                padding: 1rem;
+                margin-bottom: 1rem;
+                border-radius: 10px;
+            }
+            .dashboard-header h1 {
+                font-size: 1.8rem !important;
+            }
+            .dashboard-header .lead {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Status Indicators Positioning Responsive */
         .status-container {
             position: fixed;
             top: 20px;
@@ -55,6 +90,41 @@
 
         .mode-indicator-container {
             right: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .status-container {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .esp-status-container {
+                width: 100%;
+                left: 0;
+                padding: 0 10px;
+            }
+            
+            .mode-indicator-container {
+                width: 100%;
+                right: 0;
+                padding: 0 10px;
+                margin-top: 10px;
+            }
+            
+            .esp-status-card {
+                width: 100%;
+            }
+            
+            .mode-indicator {
+                width: 100%;
+                text-align: center;
+                font-size: 0.8rem;
+                padding: 8px 15px;
+            }
         }
 
         /* ESP Status Card */
@@ -119,7 +189,7 @@
             100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
         }
 
-        /* ESP Offline Overlay */
+        /* ESP Offline Overlay Responsive */
         .esp-offline-overlay {
             position: fixed;
             top: 0;
@@ -135,6 +205,7 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.5s;
+            padding: 20px;
         }
 
         .esp-offline-overlay.active {
@@ -148,12 +219,22 @@
             border-radius: 15px;
             text-align: center;
             max-width: 500px;
-            width: 90%;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             animation: slideInDown 0.5s ease-out;
         }
 
-        /* Navigation Tabs */
+        @media (max-width: 768px) {
+            .esp-offline-message {
+                padding: 1.5rem;
+                margin: 0 10px;
+            }
+            .esp-offline-message h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Navigation Tabs Responsive */
         .nav-tabs-custom {
             border-bottom: none;
             margin-bottom: 2rem;
@@ -185,6 +266,20 @@
             border: none;
         }
 
+        @media (max-width: 768px) {
+            .nav-tabs-custom {
+                margin-bottom: 1rem;
+            }
+            .nav-tabs-custom .nav-link {
+                padding: 0.5rem 1rem;
+                margin: 0 5px;
+                font-size: 0.9rem;
+            }
+            .nav-tabs-custom .nav-link i {
+                margin-right: 5px;
+            }
+        }
+
         /* Content Sections */
         .content-section {
             display: none;
@@ -195,7 +290,7 @@
             display: block;
         }
 
-        /* Servo Active Indicator */
+        /* Servo Active Indicator Responsive */
         .servo-active-indicator {
             position: fixed;
             top: 50%;
@@ -210,9 +305,27 @@
             animation: servoIndicatorAppear 0.5s ease-out forwards;
             display: none;
             max-width: 400px;
+            width: 90%;
             text-align: center;
             backdrop-filter: blur(10px);
             border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .servo-active-indicator {
+                padding: 20px;
+                width: 85%;
+            }
+            .servo-gear {
+                font-size: 3rem !important;
+            }
+            .servo-progress-ring {
+                width: 100px !important;
+                height: 100px !important;
+            }
+            .feeding-time {
+                font-size: 1.5rem !important;
+            }
         }
 
         .servo-active-content {
@@ -303,6 +416,7 @@
             animation: floatParticle 3s ease-out forwards;
         }
 
+        /* Card Responsive */
         .card {
             border: none;
             border-radius: 15px;
@@ -311,6 +425,22 @@
             margin-bottom: 1.5rem;
             transition: all 0.3s ease;
             animation: fadeIn 0.6s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                border-radius: 10px;
+                margin-bottom: 1rem;
+            }
+            .card-header {
+                padding: 0.75rem 1rem !important;
+            }
+            .card-header h4 {
+                font-size: 1.1rem;
+            }
+            .card-body {
+                padding: 1rem;
+            }
         }
 
         .card:hover {
@@ -326,12 +456,18 @@
             padding: 1rem 1.5rem;
         }
 
-        /* Water Tank Animation */
+        /* Water Tank Animation Responsive */
         .water-tank-container {
             position: relative;
             width: 100%;
             height: 300px;
             margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .water-tank-container {
+                height: 200px;
+            }
         }
 
         .water-tank {
@@ -344,6 +480,13 @@
             border-radius: 10px;
             background: linear-gradient(to bottom, #e3f2fd, #bbdefb);
             overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .water-tank {
+                width: 150px;
+                height: 200px;
+            }
         }
 
         .water-level {
@@ -371,7 +514,7 @@
             animation: bubbleRise 4s infinite linear;
         }
 
-        /* Feed Container */
+        /* Feed Container Responsive */
         .feed-container {
             position: relative;
             width: 120px;
@@ -383,6 +526,13 @@
             overflow: hidden;
         }
 
+        @media (max-width: 768px) {
+            .feed-container {
+                width: 100px;
+                height: 150px;
+            }
+        }
+
         .feed-level {
             position: absolute;
             bottom: 0;
@@ -392,7 +542,7 @@
             border-radius: 0 0 7px 7px;
         }
 
-        /* Sensor Cards */
+        /* Sensor Cards Responsive */
         .sensor-card {
             border-left: 5px solid;
             padding: 15px;
@@ -400,6 +550,19 @@
             background: white;
             transition: all 0.3s;
             height: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .sensor-card {
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+            .sensor-card .value-display {
+                font-size: 1.8rem !important;
+            }
+            .sensor-card i {
+                font-size: 2rem !important;
+            }
         }
 
         .sensor-card:hover {
@@ -424,7 +587,16 @@
             margin-left: 5px;
         }
 
-        /* Control Cards dengan Status di Atas */
+        @media (max-width: 768px) {
+            .value-display {
+                font-size: 1.8rem;
+            }
+            .value-unit {
+                font-size: 1rem;
+            }
+        }
+
+        /* Control Cards Responsive */
         .control-card {
             background: white;
             border-radius: 12px;
@@ -434,6 +606,19 @@
             height: 100%;
             position: relative;
             overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .control-card {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            .control-card h5 {
+                font-size: 1rem;
+            }
+            .control-icon {
+                font-size: 2.5rem !important;
+            }
         }
 
         .control-card:hover {
@@ -476,6 +661,16 @@
             margin-top: 15px;
         }
 
+        @media (max-width: 768px) {
+            .control-buttons {
+                gap: 8px;
+            }
+            .control-btn {
+                padding: 8px 5px;
+                font-size: 0.85rem;
+            }
+        }
+
         .control-btn {
             flex: 1;
             padding: 10px;
@@ -508,12 +703,18 @@
             box-shadow: none !important;
         }
 
-        /* Feed Management Card dengan Slider */
+        /* Feed Management Card Responsive */
         .feed-management-card {
             background: white;
             border-radius: 15px;
             padding: 25px;
             height: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .feed-management-card {
+                padding: 15px;
+            }
         }
 
         .feed-management-card.feeding-active {
@@ -529,6 +730,13 @@
             margin: 20px 0;
         }
 
+        @media (max-width: 768px) {
+            .slider-container {
+                padding: 15px;
+                margin: 15px 0;
+            }
+        }
+
         .slider-labels {
             display: flex;
             justify-content: space-between;
@@ -542,6 +750,14 @@
             padding: 5px 10px;
             border-radius: 20px;
             transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .slider-label {
+                font-size: 0.8rem;
+                padding: 4px 8px;
+            }
         }
 
         .slider-label.active {
@@ -550,7 +766,7 @@
             transform: scale(1.1);
         }
 
-        /* Custom Slider */
+        /* Custom Slider Responsive */
         .custom-slider {
             appearance: none;
             -moz-appearance: none;
@@ -562,6 +778,16 @@
             outline: none;
             opacity: 0.9;
             transition: opacity .2s;
+        }
+
+        @media (max-width: 768px) {
+            .custom-slider {
+                height: 16px;
+            }
+            .custom-slider::-webkit-slider-thumb {
+                width: 35px !important;
+                height: 35px !important;
+            }
         }
 
         .custom-slider:hover {
@@ -596,13 +822,23 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
         }
 
-        /* Calibration Styles */
+        /* Calibration Styles Responsive */
         .calibration-step {
             padding: 20px;
             background: #f8f9fa;
             border-radius: 10px;
             margin-bottom: 20px;
             border-left: 4px solid var(--aqua-green);
+        }
+
+        @media (max-width: 768px) {
+            .calibration-step {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            .calibration-step h5 {
+                font-size: 1.1rem;
+            }
         }
 
         .calibration-step.active {
@@ -623,6 +859,16 @@
             margin-right: 15px;
         }
 
+        @media (max-width: 768px) {
+            .calibration-step-number {
+                width: 35px;
+                height: 35px;
+                line-height: 35px;
+                font-size: 0.9rem;
+                margin-right: 10px;
+            }
+        }
+
         .calibration-step.active .calibration-step-number {
             background: var(--primary-blue);
         }
@@ -634,6 +880,12 @@
             margin-top: 15px;
         }
 
+        @media (max-width: 768px) {
+            .auto-calibration {
+                padding: 12px;
+            }
+        }
+
         .history-item {
             background: #f8f9fa;
             border-radius: 10px;
@@ -642,7 +894,13 @@
             border-left: 4px solid var(--primary-blue);
         }
 
-        /* Modal Confirm */
+        @media (max-width: 768px) {
+            .history-item {
+                padding: 12px;
+            }
+        }
+
+        /* Modal Confirm Responsive */
         .modal-confirm {
             display: none;
             position: fixed;
@@ -655,6 +913,7 @@
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(5px);
+            padding: 20px;
         }
 
         .modal-content-confirm {
@@ -662,11 +921,118 @@
             border-radius: 15px;
             padding: 30px;
             max-width: 500px;
-            width: 90%;
+            width: 100%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             animation: slideInDown 0.3s ease-out;
             position: relative;
             z-index: 10000;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content-confirm {
+                padding: 20px;
+            }
+        }
+
+        /* Input fields responsive */
+        input.form-control {
+            min-height: 45px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            input.form-control {
+                min-height: 40px;
+                font-size: 0.95rem;
+            }
+            .input-group {
+                flex-wrap: wrap;
+            }
+            .input-group .btn {
+                margin-top: 5px;
+                width: 100%;
+            }
+        }
+
+        /* Button sizes untuk mobile */
+        @media (max-width: 768px) {
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            .btn-lg {
+                padding: 0.6rem 1.2rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Mode Selection Buttons Responsive */
+        @media (max-width: 768px) {
+            .control-btn.btn {
+                padding: 1rem 0.5rem;
+                font-size: 0.9rem;
+            }
+            .control-btn.btn .fs-4 {
+                font-size: 1.5rem !important;
+            }
+        }
+
+        /* Plant Growth Responsive */
+        .plant-growth {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 100px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .plant-growth {
+                height: 80px;
+                margin-top: 15px;
+            }
+            .plant {
+                width: 20px !important;
+            }
+        }
+
+        .plant {
+            width: 25px;
+            height: 0;
+            background: var(--plant-green);
+            margin: 0 5px;
+            border-radius: 15px 15px 0 0;
+            position: relative;
+            overflow: hidden;
+            animation: growPlant 2s ease-out forwards;
+        }
+
+        .plant::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 5px;
+            right: 5px;
+            height: 10px;
+            background: var(--plant-green);
+            border-radius: 50%;
+        }
+
+        /* Grid system responsive adjustments */
+        @media (max-width: 768px) {
+            .row {
+                margin-left: -8px;
+                margin-right: -8px;
+            }
+            .col, .col-auto, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+            .col-7, .col-8, .col-9, .col-10, .col-11, .col-12,
+            .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6,
+            .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12,
+            .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6,
+            .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
         }
 
         /* Animations */
@@ -858,36 +1224,6 @@
             100% { transform: translateY(20px) rotate(-45deg) scale(1); opacity: 0; }
         }
 
-        .plant-growth {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            height: 100px;
-            margin-top: 20px;
-        }
-
-        .plant {
-            width: 25px;
-            height: 0;
-            background: var(--plant-green);
-            margin: 0 5px;
-            border-radius: 15px 15px 0 0;
-            position: relative;
-            overflow: hidden;
-            animation: growPlant 2s ease-out forwards;
-        }
-
-        .plant::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 5px;
-            right: 5px;
-            height: 10px;
-            background: var(--plant-green);
-            border-radius: 50%;
-        }
-
         @keyframes growPlant {
             from { height: 0; }
             to { height: var(--height); }
@@ -912,6 +1248,16 @@
             right: 20px;
             z-index: 1000;
             animation: slideInRight 0.5s ease-out;
+            max-width: 350px;
+        }
+
+        @media (max-width: 768px) {
+            .notification {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                max-width: 100%;
+            }
         }
 
         .feed-animation {
@@ -945,6 +1291,50 @@
             opacity: 0.6;
             cursor: not-allowed;
         }
+
+        /* Touch-friendly improvements */
+        @media (max-width: 768px) {
+            button, .btn, .control-btn, .nav-link {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            input, select, textarea {
+                font-size: 16px !important; /* Mencegah zoom di iOS */
+            }
+        }
+
+        /* Hide unnecessary elements on mobile */
+        @media (max-width: 576px) {
+            .text-end {
+                text-align: center !important;
+                margin-top: 10px;
+            }
+            
+            .plant-growth {
+                display: none;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
     </style>
 </head>
 <body>
@@ -962,36 +1352,75 @@
         </div>
     </div>
 
-    <!-- ESP Status Indicator (KIRI ATAS) -->
-    <div class="status-container esp-status-container">
-        <div class="card esp-status-card" id="esp-status-card">
-            <div class="card-body p-2">
-                <div class="row align-items-center">
-                    <div class="col-auto">
-                        <div class="esp-status-indicator" id="esp-status-indicator">
-                            <i class="bi bi-wifi"></i>
+    <!-- Status Containers untuk Mobile -->
+    <div class="d-block d-md-none">
+        <!-- ESP Status Indicator (Mobile) -->
+        <div class="status-container esp-status-container">
+            <div class="card esp-status-card" id="esp-status-card">
+                <div class="card-body p-2">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <div class="esp-status-indicator" id="esp-status-indicator">
+                                <i class="bi bi-wifi"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <h6 class="mb-0" id="esp-status-title">Status Sistem</h6>
-                        <small class="text-muted" id="esp-status-text">
-                            <span id="esp-status-detail">Menghubungkan ke ESP32...</span>
-                        </small>
-                    </div>
-                    <div class="col-auto">
-                        <div id="esp-status-badge">
-                            <span class="badge bg-secondary" id="esp-status-badge-text">OFFLINE</span>
+                        <div class="col">
+                            <h6 class="mb-0" id="esp-status-title">Status Sistem</h6>
+                            <small class="text-muted" id="esp-status-text">
+                                <span id="esp-status-detail">Menghubungkan ke ESP32...</span>
+                            </small>
+                        </div>
+                        <div class="col-auto">
+                            <div id="esp-status-badge">
+                                <span class="badge bg-secondary" id="esp-status-badge-text">OFFLINE</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Mode Indicator (Mobile) -->
+        <div class="status-container mode-indicator-container">
+            <div class="mode-indicator mode-auto" id="mode-indicator">
+                <i class="bi bi-robot"></i> MODE OTOMATIS
+            </div>
+        </div>
     </div>
 
-    <!-- Mode Indicator (KANAN ATAS) -->
-    <div class="status-container mode-indicator-container">
-        <div class="mode-indicator mode-auto" id="mode-indicator">
-            <i class="bi bi-robot"></i> MODE OTOMATIS
+    <!-- Status Containers untuk Desktop -->
+    <div class="d-none d-md-block">
+        <!-- ESP Status Indicator (Desktop) -->
+        <div class="status-container esp-status-container">
+            <div class="card esp-status-card" id="esp-status-card-desktop">
+                <div class="card-body p-2">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <div class="esp-status-indicator" id="esp-status-indicator-desktop">
+                                <i class="bi bi-wifi"></i>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h6 class="mb-0" id="esp-status-title-desktop">Status Sistem</h6>
+                            <small class="text-muted" id="esp-status-text-desktop">
+                                <span id="esp-status-detail-desktop">Menghubungkan ke ESP32...</span>
+                            </small>
+                        </div>
+                        <div class="col-auto">
+                            <div id="esp-status-badge-desktop">
+                                <span class="badge bg-secondary" id="esp-status-badge-text-desktop">OFFLINE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mode Indicator (Desktop) -->
+        <div class="status-container mode-indicator-container">
+            <div class="mode-indicator mode-auto" id="mode-indicator-desktop">
+                <i class="bi bi-robot"></i> MODE OTOMATIS
+            </div>
         </div>
     </div>
 
@@ -1020,7 +1449,7 @@
             </div>
             <h4 class="text-center mb-3" id="confirm-title">Konfirmasi</h4>
             <p class="text-center text-muted mb-4" id="confirm-message"></p>
-            <div class="d-flex gap-3">
+            <div class="d-flex gap-3 flex-column flex-md-row">
                 <button class="btn btn-outline-secondary flex-fill" id="cancel-btn">
                     <i class="bi bi-x-lg"></i> Batal
                 </button>
@@ -1052,12 +1481,14 @@
                 <ul class="nav nav-tabs justify-content-center" id="mainTabs">
                     <li class="nav-item">
                         <button class="nav-link active" id="monitoring-tab" onclick="switchTab('monitoring')">
-                            <i class="bi bi-graph-up"></i> Monitoring & Kontrol
+                            <i class="bi bi-graph-up"></i> <span class="d-none d-md-inline">Monitoring & Kontrol</span>
+                            <span class="d-inline d-md-none">Monitoring</span>
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" id="calibration-tab" onclick="switchTab('calibration')">
-                            <i class="bi bi-tools"></i> Kalibrasi
+                            <i class="bi bi-tools"></i> <span class="d-none d-md-inline">Kalibrasi</span>
+                            <span class="d-inline d-md-none">Kalibrasi</span>
                         </button>
                     </li>
                 </ul>
@@ -1072,7 +1503,7 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="mb-0"><i class="bi bi-water"></i> Kualitas Air</h4>
-                            <div>
+                            <div class="d-none d-md-block">
                                 <span class="quality-indicator good"></span>
                                 <small>Kondisi: <span id="water-condition">Baik</span></small>
                             </div>
@@ -1080,7 +1511,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <!-- Water Tank with Animation -->
-                                <div class="col-md-4 text-center">
+                                <div class="col-md-4 text-center mb-3 mb-md-0">
                                     <div class="water-tank-container mb-3">
                                         <div class="water-tank">
                                             <div class="water-level" id="water-level-visual"></div>
@@ -1148,7 +1579,7 @@
                                     </div>
 
                                     <!-- Plant Growth Animation -->
-                                    <div class="plant-growth">
+                                    <div class="plant-growth d-none d-md-flex">
                                         <div class="plant" style="--height: 60px; animation-delay: 0.2s;"></div>
                                         <div class="plant" style="--height: 80px; animation-delay: 0.4s;"></div>
                                         <div class="plant" style="--height: 40px; animation-delay: 0.6s;"></div>
@@ -1208,14 +1639,14 @@
                                     <button class="control-btn btn btn-success w-100 py-3" onclick="setMode('auto')" id="btn-mode-auto">
                                         <i class="bi bi-robot fs-4"></i>
                                         <div class="mt-2">Mode Otomatis</div>
-                                        <small>Sistem berjalan sendiri berdasarkan sensor</small>
+                                        <small class="d-none d-md-block">Sistem berjalan sendiri berdasarkan sensor</small>
                                     </button>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <button class="control-btn btn btn-warning w-100 py-3" onclick="setMode('manual')" id="btn-mode-manual">
                                         <i class="bi bi-hand-index fs-4"></i>
                                         <div class="mt-2">Mode Manual</div>
-                                        <small>Kontrol manual semua perangkat</small>
+                                        <small class="d-none d-md-block">Kontrol manual semua perangkat</small>
                                     </button>
                                 </div>
                             </div>
@@ -1227,7 +1658,7 @@
                                         <div class="control-status status-off" id="pompa-isi-status-indicator"></div>
                                         <i class="bi bi-droplet control-icon"></i>
                                         <h5>Pompa Isi Air</h5>
-                                        <p class="text-muted small">Mengisi air ke kolam ikan</p>
+                                        <p class="text-muted small d-none d-md-block">Mengisi air ke kolam ikan</p>
                                         <div class="control-buttons">
                                             <button class="control-btn btn-on" onclick="controlDevice('pompa-isi', 'on')" id="btn-pompa-isi-on">
                                                 <i class="bi bi-play-fill"></i> ON
@@ -1244,7 +1675,7 @@
                                         <div class="control-status status-off" id="pompa-buang-status-indicator"></div>
                                         <i class="bi bi-droplet-fill control-icon"></i>
                                         <h5>Pompa Buang Air</h5>
-                                        <p class="text-muted small">Menguras air dari kolam</p>
+                                        <p class="text-muted small d-none d-md-block">Menguras air dari kolam</p>
                                         <div class="control-buttons">
                                             <button class="control-btn btn-on" onclick="controlDevice('pompa-buang', 'on')" id="btn-pompa-buang-on">
                                                 <i class="bi bi-play-fill"></i> ON
@@ -1261,7 +1692,7 @@
                                         <div class="control-status status-off" id="irigasi-status-indicator"></div>
                                         <i class="bi bi-droplet control-icon"></i>
                                         <h5>Sistem Irigasi</h5>
-                                        <p class="text-muted small">Mengairi tanaman hidroponik</p>
+                                        <p class="text-muted small d-none d-md-block">Mengairi tanaman hidroponik</p>
                                         <div class="control-buttons">
                                             <button class="control-btn btn-on" onclick="controlDevice('irigasi', 'on')" id="btn-irigasi-on">
                                                 <i class="bi bi-play-fill"></i> ON
@@ -1642,26 +2073,70 @@
             espOnline = online;
             const now = Date.now();
             
+            // Update untuk mobile
             const statusCard = document.getElementById('esp-status-card');
             const statusIndicator = document.getElementById('esp-status-indicator');
             const statusTitle = document.getElementById('esp-status-title');
             const statusDetail = document.getElementById('esp-status-detail');
             const statusBadge = document.getElementById('esp-status-badge-text');
+            
+            // Update untuk desktop
+            const statusCardDesktop = document.getElementById('esp-status-card-desktop');
+            const statusIndicatorDesktop = document.getElementById('esp-status-indicator-desktop');
+            const statusTitleDesktop = document.getElementById('esp-status-title-desktop');
+            const statusDetailDesktop = document.getElementById('esp-status-detail-desktop');
+            const statusBadgeDesktop = document.getElementById('esp-status-badge-text-desktop');
+            
             const overlay = document.getElementById('esp-offline-overlay');
             
             if (online) {
                 lastHeartbeatTime = now;
                 
-                // Update tampilan - ONLINE
-                statusCard.classList.remove('offline');
-                statusCard.classList.add('online');
-                statusIndicator.classList.remove('offline');
-                statusIndicator.classList.add('online');
-                statusIndicator.innerHTML = '<i class="bi bi-wifi"></i>';
-                statusTitle.textContent = 'Status Sistem';
-                statusDetail.textContent = 'Terhubung ke ESP32 & Server';
-                statusBadge.textContent = 'ONLINE';
-                statusBadge.className = 'badge bg-success';
+                // Update tampilan - ONLINE (Mobile)
+                if (statusCard) {
+                    statusCard.classList.remove('offline');
+                    statusCard.classList.add('online');
+                }
+                if (statusIndicator) {
+                    statusIndicator.classList.remove('offline');
+                    statusIndicator.classList.add('online');
+                    statusIndicator.innerHTML = '<i class="bi bi-wifi"></i>';
+                }
+                if (statusTitle) statusTitle.textContent = 'Status Sistem';
+                if (statusDetail) statusDetail.textContent = 'Terhubung ke ESP32 & Server';
+                if (statusBadge) {
+                    statusBadge.textContent = 'ONLINE';
+                    statusBadge.className = 'badge bg-success';
+                }
+                
+                // Update tampilan - ONLINE (Desktop)
+                if (statusCardDesktop) {
+                    statusCardDesktop.classList.remove('offline');
+                    statusCardDesktop.classList.add('online');
+                }
+                if (statusIndicatorDesktop) {
+                    statusIndicatorDesktop.classList.remove('offline');
+                    statusIndicatorDesktop.classList.add('online');
+                    statusIndicatorDesktop.innerHTML = '<i class="bi bi-wifi"></i>';
+                }
+                if (statusTitleDesktop) statusTitleDesktop.textContent = 'Status Sistem';
+                if (statusDetailDesktop) statusDetailDesktop.textContent = 'Terhubung ke ESP32 & Server';
+                if (statusBadgeDesktop) {
+                    statusBadgeDesktop.textContent = 'ONLINE';
+                    statusBadgeDesktop.className = 'badge bg-success';
+                }
+                
+                // Update mode indicator
+                const modeIndicator = document.getElementById('mode-indicator');
+                const modeIndicatorDesktop = document.getElementById('mode-indicator-desktop');
+                if (modeIndicator) {
+                    modeIndicator.innerHTML = '<i class="bi bi-robot"></i> MODE OTOMATIS';
+                    modeIndicator.className = 'mode-indicator mode-auto';
+                }
+                if (modeIndicatorDesktop) {
+                    modeIndicatorDesktop.innerHTML = '<i class="bi bi-robot"></i> MODE OTOMATIS';
+                    modeIndicatorDesktop.className = 'mode-indicator mode-auto';
+                }
                 
                 // Sembunyikan overlay
                 if (overlay) overlay.classList.remove('active');
@@ -1670,16 +2145,39 @@
                 updateControlState();
                 
             } else {
-                // Update tampilan - OFFLINE
-                statusCard.classList.remove('online');
-                statusCard.classList.add('offline');
-                statusIndicator.classList.remove('online');
-                statusIndicator.classList.add('offline');
-                statusIndicator.innerHTML = '<i class="bi bi-wifi-off"></i>';
-                statusTitle.textContent = 'Status Sistem';
-                statusDetail.textContent = 'ESP32 tidak terdeteksi';
-                statusBadge.textContent = 'OFFLINE';
-                statusBadge.className = 'badge bg-danger';
+                // Update tampilan - OFFLINE (Mobile)
+                if (statusCard) {
+                    statusCard.classList.remove('online');
+                    statusCard.classList.add('offline');
+                }
+                if (statusIndicator) {
+                    statusIndicator.classList.remove('online');
+                    statusIndicator.classList.add('offline');
+                    statusIndicator.innerHTML = '<i class="bi bi-wifi-off"></i>';
+                }
+                if (statusTitle) statusTitle.textContent = 'Status Sistem';
+                if (statusDetail) statusDetail.textContent = 'ESP32 tidak terdeteksi';
+                if (statusBadge) {
+                    statusBadge.textContent = 'OFFLINE';
+                    statusBadge.className = 'badge bg-danger';
+                }
+                
+                // Update tampilan - OFFLINE (Desktop)
+                if (statusCardDesktop) {
+                    statusCardDesktop.classList.remove('online');
+                    statusCardDesktop.classList.add('offline');
+                }
+                if (statusIndicatorDesktop) {
+                    statusIndicatorDesktop.classList.remove('online');
+                    statusIndicatorDesktop.classList.add('offline');
+                    statusIndicatorDesktop.innerHTML = '<i class="bi bi-wifi-off"></i>';
+                }
+                if (statusTitleDesktop) statusTitleDesktop.textContent = 'Status Sistem';
+                if (statusDetailDesktop) statusDetailDesktop.textContent = 'ESP32 tidak terdeteksi';
+                if (statusBadgeDesktop) {
+                    statusBadgeDesktop.textContent = 'OFFLINE';
+                    statusBadgeDesktop.className = 'badge bg-danger';
+                }
                 
                 // Tampilkan overlay
                 if (overlay) overlay.classList.add('active');
@@ -1865,6 +2363,7 @@
         // Generate fish in water tank
         function generateWaterAnimations() {
             const tank = document.querySelector('.water-tank');
+            if (!tank) return;
             
             // Clear existing fish
             tank.querySelectorAll('.fish').forEach(fish => fish.remove());
@@ -1883,8 +2382,9 @@
             setInterval(() => {
                 const bubble = document.createElement('div');
                 bubble.className = 'bubble';
-                bubble.style.width = `${5 + Math.random() * 10}px`;
-                bubble.style.height = bubble.style.width;
+                const bubbleSize = 5 + Math.random() * 10;
+                bubble.style.width = `${bubbleSize}px`;
+                bubble.style.height = `${bubbleSize}px`;
                 bubble.style.left = `${30 + Math.random() * 40}%`;
                 bubble.style.bottom = '0';
                 bubble.style.animationDuration = `${2 + Math.random() * 3}s`;
@@ -1898,15 +2398,24 @@
         // Update time
         function updateTime() {
             const now = new Date();
-            document.getElementById('current-time').textContent = 
-                now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const timeElement = document.getElementById('current-time');
+            if (timeElement) {
+                timeElement.textContent = 
+                    now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            }
         }
 
         // Update water condition indicator
         function updateWaterCondition() {
-            const ph = parseFloat(document.getElementById('ph-value').textContent);
-            const tds = parseFloat(document.getElementById('tds-value').textContent);
-            const turbidity = parseFloat(document.getElementById('turbidity-value').textContent);
+            const phElement = document.getElementById('ph-value');
+            const tdsElement = document.getElementById('tds-value');
+            const turbidityElement = document.getElementById('turbidity-value');
+            
+            if (!phElement || !tdsElement || !turbidityElement) return;
+            
+            const ph = parseFloat(phElement.textContent);
+            const tds = parseFloat(tdsElement.textContent);
+            const turbidity = parseFloat(turbidityElement.textContent);
             
             let condition = "Baik";
             let indicatorClass = "good";
@@ -1920,9 +2429,15 @@
                 indicatorClass = "danger";
             }
             
-            document.getElementById('water-condition').textContent = condition;
+            const waterConditionElement = document.getElementById('water-condition');
+            if (waterConditionElement) {
+                waterConditionElement.textContent = condition;
+            }
+            
             const indicator = document.querySelector('.quality-indicator');
-            indicator.className = `quality-indicator ${indicatorClass}`;
+            if (indicator) {
+                indicator.className = `quality-indicator ${indicatorClass}`;
+            }
         }
 
         // Update control status indicator dari ESP32
@@ -1965,14 +2480,27 @@
         // Update mode indicator
         function updateModeIndicator(isAuto) {
             const modeIndicator = document.getElementById('mode-indicator');
+            const modeIndicatorDesktop = document.getElementById('mode-indicator-desktop');
             currentMode = isAuto ? 'auto' : 'manual';
             
             if (isAuto) {
-                modeIndicator.innerHTML = '<i class="bi bi-robot"></i> MODE OTOMATIS';
-                modeIndicator.className = 'mode-indicator mode-auto';
+                if (modeIndicator) {
+                    modeIndicator.innerHTML = '<i class="bi bi-robot"></i> MODE OTOMATIS';
+                    modeIndicator.className = 'mode-indicator mode-auto';
+                }
+                if (modeIndicatorDesktop) {
+                    modeIndicatorDesktop.innerHTML = '<i class="bi bi-robot"></i> MODE OTOMATIS';
+                    modeIndicatorDesktop.className = 'mode-indicator mode-auto';
+                }
             } else {
-                modeIndicator.innerHTML = '<i class="bi bi-hand-index"></i> MODE MANUAL';
-                modeIndicator.className = 'mode-indicator mode-manual';
+                if (modeIndicator) {
+                    modeIndicator.innerHTML = '<i class="bi bi-hand-index"></i> MODE MANUAL';
+                    modeIndicator.className = 'mode-indicator mode-manual';
+                }
+                if (modeIndicatorDesktop) {
+                    modeIndicatorDesktop.innerHTML = '<i class="bi bi-hand-index"></i> MODE MANUAL';
+                    modeIndicatorDesktop.className = 'mode-indicator mode-manual';
+                }
             }
         }
 
@@ -1985,11 +2513,14 @@
             
             // Activate appropriate label
             if (percentage <= 33) {
-                document.getElementById('label-sedikit').classList.add('active');
+                const label = document.getElementById('label-sedikit');
+                if (label) label.classList.add('active');
             } else if (percentage <= 66) {
-                document.getElementById('label-sedang').classList.add('active');
+                const label = document.getElementById('label-sedang');
+                if (label) label.classList.add('active');
             } else {
-                document.getElementById('label-banyak').classList.add('active');
+                const label = document.getElementById('label-banyak');
+                if (label) label.classList.add('active');
             }
         }
 
@@ -2005,11 +2536,18 @@
             const feedCard = document.getElementById('feed-control-card');
             
             // Show indicator
-            indicator.style.display = 'block';
-            feedCard.classList.add('feeding-active');
+            if (indicator) {
+                indicator.style.display = 'block';
+            }
+            if (feedCard) {
+                feedCard.classList.add('feeding-active');
+            }
             
             // Update time display
-            document.getElementById('feeding-time').textContent = `${duration.toFixed(1)}s`;
+            const feedingTimeElement = document.getElementById('feeding-time');
+            if (feedingTimeElement) {
+                feedingTimeElement.textContent = `${duration.toFixed(1)}s`;
+            }
             
             // Start progress animation
             const progressCircle = document.getElementById('servo-progress-circle');
@@ -2029,11 +2567,15 @@
                 progress = Math.min(100, (elapsed / feedingDuration) * 100);
                 
                 // Update progress ring
-                const offset = circumference - (progress / 100) * circumference;
-                progressCircle.style.strokeDashoffset = offset;
+                if (progressCircle) {
+                    const offset = circumference - (progress / 100) * circumference;
+                    progressCircle.style.strokeDashoffset = offset;
+                }
                 
                 // Update time display
-                document.getElementById('feeding-time').textContent = `${remaining.toFixed(1)}s`;
+                if (feedingTimeElement) {
+                    feedingTimeElement.textContent = `${remaining.toFixed(1)}s`;
+                }
                 
                 // Check if finished
                 if (remaining <= 0) {
@@ -2050,6 +2592,8 @@
         // Generate feeding particles
         function generateFeedingParticles() {
             const container = document.getElementById('feeding-particles');
+            if (!container) return;
+            
             container.innerHTML = '';
             
             for (let i = 0; i < 20; i++) {
@@ -2080,14 +2624,19 @@
             const indicator = document.getElementById('servo-active-indicator');
             const feedCard = document.getElementById('feed-control-card');
             
-            // Add disappear animation
-            indicator.style.animation = 'servoIndicatorDisappear 0.5s ease-out forwards';
+            if (indicator) {
+                // Add disappear animation
+                indicator.style.animation = 'servoIndicatorDisappear 0.5s ease-out forwards';
+                
+                setTimeout(() => {
+                    indicator.style.display = 'none';
+                    indicator.style.animation = 'servoIndicatorAppear 0.5s ease-out forwards';
+                }, 500);
+            }
             
-            setTimeout(() => {
-                indicator.style.display = 'none';
-                indicator.style.animation = 'servoIndicatorAppear 0.5s ease-out forwards';
+            if (feedCard) {
                 feedCard.classList.remove('feeding-active');
-            }, 500);
+            }
             
             if (feedingInterval) {
                 clearInterval(feedingInterval);
@@ -2098,6 +2647,8 @@
         // Show feeding animation in feed container
         function showFeedAnimation() {
             const animationContainer = document.getElementById('feed-animation');
+            if (!animationContainer) return;
+            
             animationContainer.innerHTML = '';
             
             for (let i = 0; i < 10; i++) {
@@ -2108,7 +2659,11 @@
                     particle.style.top = `${Math.random() * 50}%`;
                     animationContainer.appendChild(particle);
                     
-                    setTimeout(() => particle.remove(), 1000);
+                    setTimeout(() => {
+                        if (particle.parentNode === animationContainer) {
+                            particle.remove();
+                        }
+                    }, 1000);
                 }, i * 100);
             }
         }
@@ -2118,11 +2673,13 @@
             const percent = (level / max) * 100;
             const alertElement = document.getElementById('feed-alert');
             
-            if (percent < 20) {
-                alertElement.style.display = 'block';
-                alertElement.classList.add('animate__animated', 'animate__headShake');
-            } else {
-                alertElement.style.display = 'none';
+            if (alertElement) {
+                if (percent < 20) {
+                    alertElement.style.display = 'block';
+                    alertElement.classList.add('animate__animated', 'animate__headShake');
+                } else {
+                    alertElement.style.display = 'none';
+                }
             }
         }
 
@@ -2136,14 +2693,16 @@
             `;
             
             const container = document.getElementById('notification-container');
-            container.appendChild(notification);
-            
-            // Hapus setelah 5 detik
-            setTimeout(() => {
-                if (notification.parentNode === container) {
-                    notification.remove();
-                }
-            }, 5000);
+            if (container) {
+                container.appendChild(notification);
+                
+                // Hapus setelah 5 detik
+                setTimeout(() => {
+                    if (notification.parentNode === container) {
+                        notification.remove();
+                    }
+                }, 5000);
+            }
         }
 
         // Feed duration mapping ke kode
@@ -2213,27 +2772,57 @@
         function updateWaterVisual(current, max) {
             const percent = (current / max) * 100;
             const waterLevel = document.getElementById('water-level-visual');
-            waterLevel.style.height = `${Math.min(percent, 100)}%`;
-            document.getElementById('water-level').textContent = current.toFixed(1);
+            if (waterLevel) {
+                waterLevel.style.height = `${Math.min(percent, 100)}%`;
+            }
+            
+            const waterLevelText = document.getElementById('water-level');
+            if (waterLevelText) {
+                waterLevelText.textContent = current.toFixed(1);
+            }
             
             // Update progress bars for sensors
-            const phValue = parseFloat(document.getElementById('ph-value').textContent);
-            const tdsValue = parseFloat(document.getElementById('tds-value').textContent);
-            const turbidityValue = parseFloat(document.getElementById('turbidity-value').textContent);
+            const phElement = document.getElementById('ph-value');
+            const tdsElement = document.getElementById('tds-value');
+            const turbidityElement = document.getElementById('turbidity-value');
             
-            document.getElementById('ph-progress').style.width = `${(phValue / 14) * 100}%`;
-            document.getElementById('tds-progress').style.width = `${Math.min(100, (tdsValue / 5000) * 100)}%`;
-            document.getElementById('turbidity-progress').style.width = `${Math.min(100, (turbidityValue / 1000) * 100)}%`;
+            if (phElement && tdsElement && turbidityElement) {
+                const phValue = parseFloat(phElement.textContent);
+                const tdsValue = parseFloat(tdsElement.textContent);
+                const turbidityValue = parseFloat(turbidityElement.textContent);
+                
+                const phProgress = document.getElementById('ph-progress');
+                const tdsProgress = document.getElementById('tds-progress');
+                const turbidityProgress = document.getElementById('turbidity-progress');
+                
+                if (phProgress) phProgress.style.width = `${(phValue / 14) * 100}%`;
+                if (tdsProgress) tdsProgress.style.width = `${Math.min(100, (tdsValue / 5000) * 100)}%`;
+                if (turbidityProgress) turbidityProgress.style.width = `${Math.min(100, (turbidityValue / 1000) * 100)}%`;
+            }
         }
 
         // Update feed visual
         function updateFeedVisual(current, max) {
             const percent = (current / max) * 100;
             const feedLevel = document.getElementById('feed-level-visual');
-            feedLevel.style.height = `${Math.min(percent, 100)}%`;
-            document.getElementById('feed-level').textContent = current.toFixed(1);
-            document.getElementById('feed-percentage').textContent = `${Math.round(percent)}%`;
-            document.getElementById('feed-progress-bar').style.width = `${percent}%`;
+            if (feedLevel) {
+                feedLevel.style.height = `${Math.min(percent, 100)}%`;
+            }
+            
+            const feedLevelText = document.getElementById('feed-level');
+            if (feedLevelText) {
+                feedLevelText.textContent = current.toFixed(1);
+            }
+            
+            const feedPercentage = document.getElementById('feed-percentage');
+            if (feedPercentage) {
+                feedPercentage.textContent = `${Math.round(percent)}%`;
+            }
+            
+            const feedProgressBar = document.getElementById('feed-progress-bar');
+            if (feedProgressBar) {
+                feedProgressBar.style.width = `${percent}%`;
+            }
             
             // Check if feed is low
             checkFeedLevel(current, max);
@@ -2491,6 +3080,8 @@
             const historyList = document.getElementById('history-list');
             const emptyHistory = document.getElementById('empty-history');
             
+            if (!historyList || !emptyHistory) return;
+            
             historyList.innerHTML = '';
             
             const hasHistory = Object.values(lastCalibrationData).some(entry => entry !== null);
@@ -2580,15 +3171,20 @@
         let currentAction = null;
 
         function showConfirmModal(title, message, action) {
-            document.getElementById('confirm-title').textContent = title;
-            document.getElementById('confirm-message').textContent = message;
+            const confirmTitle = document.getElementById('confirm-title');
+            const confirmMessage = document.getElementById('confirm-message');
+            const confirmModal = document.getElementById('confirm-modal');
+            
+            if (confirmTitle) confirmTitle.textContent = title;
+            if (confirmMessage) confirmMessage.textContent = message;
             currentAction = action;
             
-            document.getElementById('confirm-modal').style.display = 'flex';
+            if (confirmModal) confirmModal.style.display = 'flex';
         }
 
         function hideConfirmModal() {
-            document.getElementById('confirm-modal').style.display = 'none';
+            const confirmModal = document.getElementById('confirm-modal');
+            if (confirmModal) confirmModal.style.display = 'none';
             currentAction = null;
         }
 
@@ -2630,11 +3226,21 @@
         // Simpan pengaturan sistem
         function saveSettings() {
             try {
+                const intervalInput = document.getElementById('data-interval');
+                const warningWaterLowInput = document.getElementById('warning-water-low');
+                const warningWaterHighInput = document.getElementById('warning-water-high');
+                const warningFeedInput = document.getElementById('warning-feed');
+                
+                if (!intervalInput || !warningWaterLowInput || !warningWaterHighInput || !warningFeedInput) {
+                    showNotification('Elemen pengaturan tidak ditemukan', 'danger');
+                    return;
+                }
+                
                 const settings = {
-                    interval: document.getElementById('data-interval').value,
-                    warningWaterLow: document.getElementById('warning-water-low').value,
-                    warningWaterHigh: document.getElementById('warning-water-high').value,
-                    warningFeed: document.getElementById('warning-feed').value
+                    interval: intervalInput.value,
+                    warningWaterLow: warningWaterLowInput.value,
+                    warningWaterHigh: warningWaterHighInput.value,
+                    warningFeed: warningFeedInput.value
                 };
                 
                 if (parseFloat(settings.warningWaterLow) >= parseFloat(settings.warningWaterHigh)) {
@@ -2660,17 +3266,26 @@
         // ============================================
 
         // Event listeners untuk modal
-        document.getElementById('confirm-action-btn').addEventListener('click', confirmAction);
-        document.getElementById('cancel-btn').addEventListener('click', hideConfirmModal);
-        
-        document.getElementById('confirm-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                hideConfirmModal();
-            }
-        });
-
-        // Inisialisasi ketika DOM siap
         document.addEventListener('DOMContentLoaded', function() {
+            const confirmActionBtn = document.getElementById('confirm-action-btn');
+            const cancelBtn = document.getElementById('cancel-btn');
+            const confirmModal = document.getElementById('confirm-modal');
+            
+            if (confirmActionBtn) {
+                confirmActionBtn.addEventListener('click', confirmAction);
+            }
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', hideConfirmModal);
+            }
+            if (confirmModal) {
+                confirmModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        hideConfirmModal();
+                    }
+                });
+            }
+            
+            // Inisialisasi fungsi lainnya
             updateTime();
             setInterval(updateTime, 1000);
             
@@ -2690,11 +3305,17 @@
             generateWaterAnimations();
             
             // Set initial values for monitoring
-            document.getElementById('ph-value').textContent = '7.2';
-            document.getElementById('tds-value').textContent = '850';
-            document.getElementById('turbidity-value').textContent = '12';
-            document.getElementById('water-level').textContent = '35.0';
-            document.getElementById('feed-level').textContent = '22.0';
+            const phValue = document.getElementById('ph-value');
+            const tdsValue = document.getElementById('tds-value');
+            const turbidityValue = document.getElementById('turbidity-value');
+            const waterLevel = document.getElementById('water-level');
+            const feedLevel = document.getElementById('feed-level');
+            
+            if (phValue) phValue.textContent = '7.2';
+            if (tdsValue) tdsValue.textContent = '850';
+            if (turbidityValue) turbidityValue.textContent = '12';
+            if (waterLevel) waterLevel.textContent = '35.0';
+            if (feedLevel) feedLevel.textContent = '22.0';
             
             // Initialize visualizations
             updateWaterVisual(35, 63);
@@ -2702,8 +3323,11 @@
             updateWaterCondition();
             
             // Set slider to initial value
-            document.getElementById('feed-amount-slider').value = currentFeedAmount;
-            updateSliderLabels(currentFeedAmount);
+            const slider = document.getElementById('feed-amount-slider');
+            if (slider) {
+                slider.value = currentFeedAmount;
+                updateSliderLabels(currentFeedAmount);
+            }
             
             // Set initial control status
             updateControlStatusFromESP32('PompaIsi', false);
@@ -2729,8 +3353,13 @@
             
             // Update status
             const statusDetail = document.getElementById('esp-status-detail');
+            const statusDetailDesktop = document.getElementById('esp-status-detail-desktop');
+            
             if (statusDetail) {
                 statusDetail.textContent = 'Terhubung ke server, menunggu ESP32...';
+            }
+            if (statusDetailDesktop) {
+                statusDetailDesktop.textContent = 'Terhubung ke server, menunggu ESP32...';
             }
             
             const topics = [
@@ -2764,6 +3393,8 @@
             
             function animateValueChange(elementId, newValue) {
                 const element = document.getElementById(elementId);
+                if (!element) return;
+                
                 const oldValue = parseFloat(element.textContent);
                 const duration = 500;
                 const steps = 30;
@@ -2787,30 +3418,35 @@
                     const value = parseFloat(payload);
                     currentSensorValues.ph = value;
                     animateValueChange('ph-value', value);
-                    document.getElementById('read-value-ph').textContent = `${value.toFixed(2)} pH`;
+                    const readValuePh = document.getElementById('read-value-ph');
+                    if (readValuePh) readValuePh.textContent = `${value.toFixed(2)} pH`;
                     updateWaterCondition();
                 } else if (topic === 'akuaponik/monitoring/TDS') {
                     const value = parseFloat(payload);
                     currentSensorValues.tds = value;
                     animateValueChange('tds-value', value);
-                    document.getElementById('read-value-tds').textContent = `${value} ppm`;
+                    const readValueTds = document.getElementById('read-value-tds');
+                    if (readValueTds) readValueTds.textContent = `${value} ppm`;
                     updateWaterCondition();
                 } else if (topic === 'akuaponik/monitoring/Turbidity') {
                     const value = parseFloat(payload);
                     currentSensorValues.turbidity = value;
                     animateValueChange('turbidity-value', value);
-                    document.getElementById('read-value-turbidity').textContent = `${value.toFixed(1)} NTU`;
+                    const readValueTurbidity = document.getElementById('read-value-turbidity');
+                    if (readValueTurbidity) readValueTurbidity.textContent = `${value.toFixed(1)} NTU`;
                     updateWaterCondition();
                 } else if (topic === 'akuaponik/monitoring/Air') {
                     const value = parseFloat(payload);
                     currentSensorValues.air = value;
                     updateWaterVisual(value, 63);
-                    document.getElementById('read-value-air').textContent = `${value.toFixed(1)} cm`;
+                    const readValueAir = document.getElementById('read-value-air');
+                    if (readValueAir) readValueAir.textContent = `${value.toFixed(1)} cm`;
                 } else if (topic === 'akuaponik/monitoring/Pakan') {
                     const value = parseFloat(payload);
                     currentSensorValues.feed = value;
                     updateFeedVisual(value, 29);
-                    document.getElementById('read-value-feed').textContent = `${value.toFixed(1)} cm`;
+                    const readValueFeed = document.getElementById('read-value-feed');
+                    if (readValueFeed) readValueFeed.textContent = `${value.toFixed(1)} cm`;
                 } else if (topic.includes('Status/')) {
                     const device = topic.split('/').pop();
                     const isOn = payload === '1';
@@ -2874,13 +3510,18 @@
         });
 
         // Slider event handler
-        document.getElementById('feed-amount-slider').addEventListener('input', function() {
-            currentFeedAmount = this.value;
-            updateSliderLabels(currentFeedAmount);
-            
-            if (espOnline) {
-                const feedCode = getFeedCodeFromPercentage(currentFeedAmount);
-                client.publish('akuaponik/pakan/durasi', feedCode);
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.getElementById('feed-amount-slider');
+            if (slider) {
+                slider.addEventListener('input', function() {
+                    currentFeedAmount = this.value;
+                    updateSliderLabels(currentFeedAmount);
+                    
+                    if (espOnline) {
+                        const feedCode = getFeedCodeFromPercentage(currentFeedAmount);
+                        client.publish('akuaponik/pakan/durasi', feedCode);
+                    }
+                });
             }
         });
     </script>
