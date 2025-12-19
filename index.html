@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dashboard IoT Akuaponik</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -26,6 +26,7 @@
 
         * {
             -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
         }
 
         body {
@@ -34,24 +35,29 @@
             min-height: 100vh;
             padding-top: 20px;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Responsive padding untuk container */
+        /* Responsive container */
         .container {
             padding-left: 15px;
             padding-right: 15px;
+            max-width: 100%;
         }
 
         @media (max-width: 768px) {
+            body {
+                padding-top: 10px;
+                padding-bottom: 80px;
+            }
             .container {
                 padding-left: 10px;
                 padding-right: 10px;
             }
-            body {
-                padding-top: 10px;
-            }
         }
 
+        /* Header Responsive */
         .dashboard-header {
             background: linear-gradient(90deg, var(--primary-blue), var(--aqua-green));
             color: white;
@@ -60,70 +66,57 @@
             margin-bottom: 2rem;
             box-shadow: 0 10px 30px rgba(26, 115, 232, 0.2);
             animation: slideInDown 0.8s ease-out;
+            width: 100%;
         }
 
         @media (max-width: 768px) {
             .dashboard-header {
                 padding: 1rem;
                 margin-bottom: 1rem;
-                border-radius: 10px;
+                border-radius: 12px;
             }
             .dashboard-header h1 {
-                font-size: 1.8rem !important;
+                font-size: 1.5rem !important;
+                margin-bottom: 0.5rem !important;
             }
             .dashboard-header .lead {
-                font-size: 0.9rem;
+                font-size: 0.8rem !important;
+                margin-bottom: 0.5rem !important;
             }
         }
 
-        /* Status Indicators Positioning Responsive */
+        /* Status Indicators - Simplified for mobile */
         .status-container {
-            position: fixed;
-            top: 20px;
+            position: relative;
             z-index: 1000;
+            margin-bottom: 10px;
         }
 
-        .esp-status-container {
-            left: 20px;
-            width: 280px;
-        }
-
-        .mode-indicator-container {
-            right: 20px;
+        @media (min-width: 769px) {
+            .status-container {
+                position: fixed;
+                top: 20px;
+            }
+            .esp-status-container {
+                left: 20px;
+                width: 280px;
+            }
+            .mode-indicator-container {
+                right: 20px;
+            }
         }
 
         @media (max-width: 768px) {
             .status-container {
-                position: relative;
-                top: auto;
-                left: auto;
-                right: auto;
                 width: 100%;
-                margin-bottom: 10px;
+                margin-bottom: 8px;
             }
-            
             .esp-status-container {
-                width: 100%;
-                left: 0;
-                padding: 0 10px;
+                order: 1;
             }
-            
             .mode-indicator-container {
-                width: 100%;
-                right: 0;
-                padding: 0 10px;
-                margin-top: 10px;
-            }
-            
-            .esp-status-card {
-                width: 100%;
-            }
-            
-            .mode-indicator {
-                width: 100%;
-                text-align: center;
-                font-size: 0.8rem;
-                padding: 8px 15px;
+                order: 2;
+                margin-top: 5px;
             }
         }
 
@@ -134,6 +127,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             border-left: 4px solid #6c757d;
             transition: all 0.3s;
+            width: 100%;
         }
 
         .esp-status-card.online {
@@ -148,7 +142,7 @@
         }
 
         .esp-status-indicator {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: #6c757d;
         }
 
@@ -163,14 +157,23 @@
 
         /* Mode Indicator */
         .mode-indicator {
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            animation: pulse 2s infinite;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
             text-transform: uppercase;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+
+        @media (min-width: 769px) {
+            .mode-indicator {
+                width: auto;
+                animation: pulse 2s infinite;
+            }
         }
 
         .mode-auto {
@@ -185,27 +188,26 @@
 
         @keyframes pulseWarning {
             0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+            70% { box-shadow: 0 0 0 8px rgba(220, 53, 69, 0); }
             100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
         }
 
-        /* ESP Offline Overlay Responsive */
+        /* ESP Offline Overlay - Fixed for mobile */
         .esp-offline-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 9997;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(5px);
+            padding: 20px;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s;
-            padding: 20px;
+            transition: opacity 0.3s;
         }
 
         .esp-offline-overlay.active {
@@ -215,48 +217,57 @@
 
         .esp-offline-message {
             background: white;
-            padding: 2.5rem;
+            padding: 2rem;
             border-radius: 15px;
             text-align: center;
-            max-width: 500px;
+            max-width: 400px;
             width: 100%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideInDown 0.5s ease-out;
+            animation: fadeIn 0.5s ease-out;
         }
 
         @media (max-width: 768px) {
             .esp-offline-message {
                 padding: 1.5rem;
-                margin: 0 10px;
+                margin: 0;
             }
             .esp-offline-message h3 {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
+            }
+            .esp-offline-message p {
+                font-size: 0.9rem;
             }
         }
 
         /* Navigation Tabs Responsive */
         .nav-tabs-custom {
             border-bottom: none;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 5px;
+        }
+
+        .nav-tabs-custom::-webkit-scrollbar {
+            display: none;
         }
 
         .nav-tabs-custom .nav-link {
             color: #666;
             border: none;
             border-radius: 50px;
-            padding: 0.75rem 2rem;
-            margin: 0 10px;
+            padding: 0.6rem 1.5rem;
+            margin: 0 5px;
             font-weight: 600;
             transition: all 0.3s;
+            font-size: 0.9rem;
+            display: inline-block;
         }
 
         .nav-tabs-custom .nav-link i {
-            margin-right: 8px;
-        }
-
-        .nav-tabs-custom .nav-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            margin-right: 6px;
+            font-size: 1rem;
         }
 
         .nav-tabs-custom .nav-link.active {
@@ -264,6 +275,7 @@
             color: white;
             box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3);
             border: none;
+            transform: scale(1.05);
         }
 
         @media (max-width: 768px) {
@@ -271,12 +283,10 @@
                 margin-bottom: 1rem;
             }
             .nav-tabs-custom .nav-link {
-                padding: 0.5rem 1rem;
-                margin: 0 5px;
-                font-size: 0.9rem;
-            }
-            .nav-tabs-custom .nav-link i {
-                margin-right: 5px;
+                padding: 0.5rem 1.2rem;
+                font-size: 0.85rem;
+                min-width: 140px;
+                text-align: center;
             }
         }
 
@@ -284,168 +294,556 @@
         .content-section {
             display: none;
             animation: fadeIn 0.5s ease-out;
+            width: 100%;
         }
 
         .content-section.active {
             display: block;
         }
 
-        /* Servo Active Indicator Responsive */
+        /* Riwayat Pakan Card */
+        .feed-history-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid var(--aqua-green);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .feed-history-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+
+        .feed-history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feed-history-title {
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin: 0;
+        }
+
+        .feed-history-content {
+            padding: 8px 0;
+        }
+
+        .feed-history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .feed-history-item:last-child {
+            border-bottom: none;
+        }
+
+        .feed-history-label {
+            font-size: 0.85rem;
+            color: #666;
+            min-width: 120px;
+        }
+
+        .feed-history-value {
+            font-weight: 600;
+            color: var(--primary-blue);
+            text-align: right;
+        }
+
+        .feed-history-value.success {
+            color: var(--safe-green);
+        }
+
+        .feed-history-value.warning {
+            color: var(--manual-color);
+        }
+
+        .feed-history-timestamp {
+            font-size: 0.8rem;
+            color: #888;
+            font-style: italic;
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        .feed-history-empty {
+            text-align: center;
+            color: #999;
+            padding: 15px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .feed-history-card {
+                padding: 12px;
+                margin-top: 10px;
+            }
+            
+            .feed-history-item {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 6px 0;
+            }
+            
+            .feed-history-label {
+                min-width: auto;
+                font-size: 0.8rem;
+                margin-bottom: 2px;
+            }
+            
+            .feed-history-value {
+                text-align: left;
+                font-size: 0.9rem;
+            }
+            
+            .feed-history-timestamp {
+                text-align: left;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Confirmation Modal */
+        .modal-confirm {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 9998;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content-confirm {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideInDown 0.3s ease-out;
+            position: relative;
+            z-index: 9999;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content-confirm {
+                padding: 20px;
+                max-width: 320px;
+            }
+        }
+
+        /* === SERVO ACTIVE INDICATOR RESPONSIF (BARU) === */
         .servo-active-indicator {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(0);
+            transform: translate(-50%, -50%) scale(0.9);
             z-index: 2000;
-            background: linear-gradient(135deg, #ff9800, #ff5722);
+            background: linear-gradient(135deg, 
+                rgba(255, 152, 0, 0.95), 
+                rgba(255, 87, 34, 0.95),
+                rgba(255, 152, 0, 0.95));
             color: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(255, 152, 0, 0.5);
-            animation: servoIndicatorAppear 0.5s ease-out forwards;
+            animation: servoAppear 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
             display: none;
             max-width: 400px;
             width: 90%;
             text-align: center;
             backdrop-filter: blur(10px);
-            border: 3px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
-        @media (max-width: 768px) {
-            .servo-active-indicator {
-                padding: 20px;
-                width: 85%;
-            }
-            .servo-gear {
-                font-size: 3rem !important;
-            }
-            .servo-progress-ring {
-                width: 100px !important;
-                height: 100px !important;
-            }
-            .feeding-time {
-                font-size: 1.5rem !important;
-            }
-        }
-
-        .servo-active-content {
-            position: relative;
-            padding: 20px;
-        }
-
-        .servo-gear {
-            font-size: 4rem;
+        /* Header servo */
+        .servo-header {
             margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .servo-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        /* Gear icon */
+        .servo-gear {
+            font-size: 3rem;
             display: inline-block;
             color: white;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+            animation: gearRotate 3s linear infinite;
         }
 
-        .servo-gear.rotating {
-            animation: rotate 2s linear infinite;
-        }
-
-        .servo-pulse {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 50%;
-            background: rgba(255, 152, 0, 0.2);
-            animation: pulseRing 2s infinite;
-            transform: scale(1);
+        /* Progress container */
+        .servo-progress-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 25px;
         }
 
         .servo-progress-ring {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
             position: relative;
+            width: 100%;
+            height: 100%;
         }
 
         .servo-progress-ring-circle {
             width: 100%;
             height: 100%;
-            fill: none;
-            stroke-width: 8;
-            stroke-linecap: round;
             transform: rotate(-90deg);
             transform-origin: 50% 50%;
         }
 
         .servo-progress-ring-bg {
+            fill: none;
             stroke: rgba(255, 255, 255, 0.2);
+            stroke-width: 6;
+            stroke-linecap: round;
         }
 
         .servo-progress-ring-fill {
-            stroke: white;
-            stroke-dasharray: 314;
-            stroke-dashoffset: 314;
+            fill: none;
+            stroke: #FFEB3B;
+            stroke-width: 6;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 8px rgba(255, 235, 59, 0.6));
             transition: stroke-dashoffset 0.3s linear;
         }
 
-        .feeding-time {
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 10px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        .servo-progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
         }
 
-        .feeding-description {
+        .feeding-time {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1;
+            display: block;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(to bottom, #FFF, #FFECB3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .servo-progress-text small {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Status text */
+        .servo-status {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .servo-status-text {
             font-size: 1.1rem;
-            margin-bottom: 15px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .servo-status-subtext {
+            font-size: 0.9rem;
             opacity: 0.9;
         }
 
-        .feeding-particles {
+        /* Particles */
+        .servo-particles {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+            border-radius: 20px;
         }
 
-        .feeding-particle {
+        .particle {
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background: white;
+            background: radial-gradient(circle, rgba(255, 235, 59, 0.8) 0%, rgba(255, 193, 7, 0) 70%);
             border-radius: 50%;
-            animation: floatParticle 3s ease-out forwards;
+            pointer-events: none;
+        }
+
+        /* Action button */
+        .servo-action {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .servo-action .btn {
+            padding: 8px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .servo-action .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Animations */
+        @keyframes servoAppear {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+                filter: blur(10px);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        @keyframes servoDisappear {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+                filter: blur(0);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+                filter: blur(10px);
+            }
+        }
+
+        @keyframes gearRotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes gearPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) rotate(var(--r));
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulseRing {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 235, 59, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(255, 235, 59, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 235, 59, 0);
+            }
+        }
+
+        /* Feed card active state */
+        .feeding-active {
+            animation: feedContainerPulse 2s infinite !important;
+            position: relative;
+            z-index: 100;
+        }
+
+        @keyframes feedContainerPulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 20px 10px rgba(255, 152, 0, 0.2);
+            }
+        }
+
+        /* ========== RESPONSIVE STYLES ========== */
+
+        /* Tablet */
+        @media (max-width: 992px) {
+            .servo-progress-container {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .feeding-time {
+                font-size: 3rem;
+            }
+            
+            .servo-gear {
+                font-size: 2.8rem;
+            }
+            
+            .servo-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .servo-active-indicator {
+                padding: 20px 15px;
+                max-width: 320px;
+                transform: translate(-50%, -50%) scale(0.95);
+            }
+            
+            .servo-progress-container {
+                width: 150px;
+                height: 150px;
+                margin-bottom: 20px;
+            }
+            
+            .servo-gear {
+                font-size: 2.5rem;
+                animation: gearPulse 2s infinite;
+            }
+            
+            .servo-title {
+                font-size: 1.1rem;
+                margin-top: 8px;
+            }
+            
+            .feeding-time {
+                font-size: 2.8rem;
+            }
+            
+            .servo-status {
+                padding: 12px;
+                margin: 15px 0;
+            }
+            
+            .servo-status-text {
+                font-size: 1rem;
+            }
+            
+            .servo-status-subtext {
+                font-size: 0.85rem;
+            }
+            
+            .servo-action .btn {
+                padding: 6px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Small mobile */
+        @media (max-width: 480px) {
+            .servo-active-indicator {
+                padding: 15px;
+                max-width: 280px;
+            }
+            
+            .servo-progress-container {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .servo-gear {
+                font-size: 2.2rem;
+            }
+            
+            .feeding-time {
+                font-size: 2.2rem;
+            }
+            
+            .servo-progress-text small {
+                font-size: 0.8rem;
+            }
+            
+            .servo-title {
+                font-size: 1rem;
+            }
+            
+            .servo-status-text {
+                font-size: 0.95rem;
+            }
         }
 
         /* Card Responsive */
         .card {
             border: none;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             transition: all 0.3s ease;
             animation: fadeIn 0.6s ease-out;
+            width: 100%;
         }
 
         @media (max-width: 768px) {
             .card {
                 border-radius: 10px;
                 margin-bottom: 1rem;
+                box-shadow: 0 3px 15px rgba(0,0,0,0.08);
             }
             .card-header {
-                padding: 0.75rem 1rem !important;
+                padding: 0.8rem 1rem !important;
             }
             .card-header h4 {
-                font-size: 1.1rem;
+                font-size: 1rem;
+                margin-bottom: 0;
             }
             .card-body {
                 padding: 1rem;
             }
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
         .card-header {
@@ -453,27 +851,28 @@
             color: white;
             font-weight: 600;
             border: none;
-            padding: 1rem 1.5rem;
+            padding: 1rem 1.2rem;
         }
 
         /* Water Tank Animation Responsive */
         .water-tank-container {
             position: relative;
             width: 100%;
-            height: 300px;
-            margin: 0 auto;
+            height: 250px;
+            margin: 0 auto 1rem;
         }
 
         @media (max-width: 768px) {
             .water-tank-container {
-                height: 200px;
+                height: 180px;
+                margin-bottom: 0.8rem;
             }
         }
 
         .water-tank {
             position: absolute;
-            width: 200px;
-            height: 250px;
+            width: 180px;
+            height: 200px;
             left: 50%;
             transform: translateX(-50%);
             border: 3px solid var(--water-blue);
@@ -484,8 +883,8 @@
 
         @media (max-width: 768px) {
             .water-tank {
-                width: 150px;
-                height: 200px;
+                width: 140px;
+                height: 160px;
             }
         }
 
@@ -500,8 +899,8 @@
 
         .fish {
             position: absolute;
-            width: 30px;
-            height: 15px;
+            width: 25px;
+            height: 12px;
             background: var(--fish-orange);
             border-radius: 50%;
             animation: swim 8s infinite linear;
@@ -517,9 +916,9 @@
         /* Feed Container Responsive */
         .feed-container {
             position: relative;
-            width: 120px;
-            height: 200px;
-            margin: 0 auto;
+            width: 100px;
+            height: 180px;
+            margin: 0 auto 1rem;
             border: 3px solid #8d6e63;
             border-radius: 10px;
             background: linear-gradient(to bottom, #efebe9, #d7ccc8);
@@ -528,8 +927,9 @@
 
         @media (max-width: 768px) {
             .feed-container {
-                width: 100px;
+                width: 90px;
                 height: 150px;
+                margin-bottom: 0.8rem;
             }
         }
 
@@ -544,30 +944,29 @@
 
         /* Sensor Cards Responsive */
         .sensor-card {
-            border-left: 5px solid;
-            padding: 15px;
-            border-radius: 10px;
+            border-left: 4px solid;
+            padding: 12px;
+            border-radius: 8px;
             background: white;
             transition: all 0.3s;
             height: 100%;
+            margin-bottom: 12px;
         }
 
         @media (max-width: 768px) {
             .sensor-card {
-                padding: 12px;
+                padding: 10px;
                 margin-bottom: 10px;
             }
             .sensor-card .value-display {
-                font-size: 1.8rem !important;
+                font-size: 1.6rem !important;
             }
             .sensor-card i {
-                font-size: 2rem !important;
+                font-size: 1.8rem !important;
             }
-        }
-
-        .sensor-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            .sensor-card h6 {
+                font-size: 0.8rem;
+            }
         }
 
         .sensor-card.ph { border-color: #9c27b0; }
@@ -575,63 +974,61 @@
         .sensor-card.turbidity { border-color: #ff9800; }
 
         .value-display {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
             color: var(--primary-blue);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
 
         .value-unit {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #666;
-            margin-left: 5px;
+            margin-left: 3px;
         }
 
         @media (max-width: 768px) {
             .value-display {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
             .value-unit {
-                font-size: 1rem;
+                font-size: 0.85rem;
             }
         }
 
         /* Control Cards Responsive */
         .control-card {
             background: white;
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 15px;
             text-align: center;
             transition: all 0.3s;
             height: 100%;
             position: relative;
             overflow: hidden;
+            margin-bottom: 15px;
         }
 
         @media (max-width: 768px) {
             .control-card {
-                padding: 15px;
-                margin-bottom: 15px;
+                padding: 12px;
+                margin-bottom: 12px;
             }
             .control-card h5 {
-                font-size: 1rem;
+                font-size: 0.95rem;
+                margin-bottom: 5px;
             }
             .control-icon {
-                font-size: 2.5rem !important;
+                font-size: 2rem !important;
+                margin-bottom: 10px !important;
             }
-        }
-
-        .control-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
         .control-status {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 12px;
-            height: 12px;
+            top: 12px;
+            right: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             animation: statusPulse 2s infinite;
         }
@@ -650,35 +1047,44 @@
         }
 
         .control-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
+            font-size: 2.5rem;
+            margin-bottom: 12px;
             color: var(--primary-blue);
         }
 
         .control-buttons {
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 8px;
+            margin-top: 12px;
         }
 
         @media (max-width: 768px) {
             .control-buttons {
-                gap: 8px;
-            }
-            .control-btn {
-                padding: 8px 5px;
-                font-size: 0.85rem;
+                gap: 6px;
             }
         }
 
         .control-btn {
             flex: 1;
-            padding: 10px;
+            padding: 8px 4px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-weight: 600;
             transition: all 0.3s;
             cursor: pointer;
+            font-size: 0.85rem;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .control-btn {
+                padding: 6px 3px;
+                font-size: 0.8rem;
+                min-height: 36px;
+            }
         }
 
         .btn-on {
@@ -693,7 +1099,7 @@
 
         .control-btn:hover:not(:disabled) {
             transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
 
         .control-btn:disabled {
@@ -706,8 +1112,8 @@
         /* Feed Management Card Responsive */
         .feed-management-card {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 12px;
+            padding: 20px;
             height: 100%;
         }
 
@@ -717,53 +1123,51 @@
             }
         }
 
-        .feed-management-card.feeding-active {
-            animation: cardPulse 1.5s infinite;
-            border: 2px solid #ff9800;
-            box-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
-        }
-
         .slider-container {
-            padding: 20px;
+            padding: 15px;
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border-radius: 10px;
-            margin: 20px 0;
+            border-radius: 8px;
+            margin: 15px 0;
         }
 
         @media (max-width: 768px) {
             .slider-container {
-                padding: 15px;
-                margin: 15px 0;
+                padding: 12px;
+                margin: 12px 0;
+            }
+            .slider-container h6 {
+                font-size: 0.9rem;
+                margin-bottom: 10px;
             }
         }
 
         .slider-labels {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
-            padding: 0 10px;
+            margin-top: 8px;
+            padding: 0 5px;
         }
 
         .slider-label {
             font-weight: 600;
             color: #666;
-            padding: 5px 10px;
-            border-radius: 20px;
+            padding: 4px 8px;
+            border-radius: 15px;
             transition: all 0.3s;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         @media (max-width: 768px) {
             .slider-label {
-                font-size: 0.8rem;
-                padding: 4px 8px;
+                font-size: 0.75rem;
+                padding: 3px 6px;
             }
         }
 
         .slider-label.active {
             background: var(--aqua-green);
             color: white;
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         /* Custom Slider Responsive */
@@ -772,8 +1176,8 @@
             -moz-appearance: none;
             -webkit-appearance: none;
             width: 100%;
-            height: 20px;
-            border-radius: 10px;
+            height: 16px;
+            border-radius: 8px;
             background: linear-gradient(to right, #81c784, #4caf50, #388e3c);
             outline: none;
             opacity: 0.9;
@@ -782,267 +1186,111 @@
 
         @media (max-width: 768px) {
             .custom-slider {
-                height: 16px;
+                height: 14px;
             }
-            .custom-slider::-webkit-slider-thumb {
-                width: 35px !important;
-                height: 35px !important;
-            }
-        }
-
-        .custom-slider:hover {
-            opacity: 1;
         }
 
         .custom-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background: var(--aqua-green);
             cursor: pointer;
-            border: 4px solid white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            border: 3px solid white;
+            box-shadow: 0 0 8px rgba(0,0,0,0.2);
             transition: all 0.3s;
         }
 
-        .custom-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        @media (max-width: 768px) {
+            .custom-slider::-webkit-slider-thumb {
+                width: 28px;
+                height: 28px;
+            }
         }
 
-        .custom-slider::-moz-range-thumb {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--aqua-green);
-            cursor: pointer;
-            border: 4px solid white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
-
-        /* Calibration Styles Responsive */
+        /* Calibration Styles Responsive - FIXED INPUT WIDTH */
         .calibration-step {
-            padding: 20px;
+            padding: 15px;
             background: #f8f9fa;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
             border-left: 4px solid var(--aqua-green);
         }
 
         @media (max-width: 768px) {
             .calibration-step {
-                padding: 15px;
-                margin-bottom: 15px;
+                padding: 12px;
+                margin-bottom: 12px;
             }
             .calibration-step h5 {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
-        }
-
-        .calibration-step.active {
-            background: #e8f4fd;
-            border-left: 4px solid var(--primary-blue);
+            .calibration-step p {
+                font-size: 0.85rem;
+                margin-bottom: 10px;
+            }
         }
 
         .calibration-step-number {
             display: inline-block;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             background: var(--aqua-green);
             color: white;
             border-radius: 50%;
             text-align: center;
-            line-height: 40px;
+            line-height: 35px;
             font-weight: bold;
-            margin-right: 15px;
+            margin-right: 12px;
+            font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
             .calibration-step-number {
-                width: 35px;
-                height: 35px;
-                line-height: 35px;
-                font-size: 0.9rem;
+                width: 32px;
+                height: 32px;
+                line-height: 32px;
+                font-size: 0.85rem;
                 margin-right: 10px;
             }
         }
 
-        .calibration-step.active .calibration-step-number {
-            background: var(--primary-blue);
-        }
-
-        .auto-calibration {
-            background: #e8f5e9;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
+        /* FIXED INPUT GROUP FOR MOBILE */
+        .input-group {
+            flex-wrap: nowrap;
         }
 
         @media (max-width: 768px) {
-            .auto-calibration {
-                padding: 12px;
-            }
-        }
-
-        .history-item {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-left: 4px solid var(--primary-blue);
-        }
-
-        @media (max-width: 768px) {
-            .history-item {
-                padding: 12px;
-            }
-        }
-
-        /* Modal Confirm Responsive */
-        .modal-confirm {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-            padding: 20px;
-        }
-
-        .modal-content-confirm {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideInDown 0.3s ease-out;
-            position: relative;
-            z-index: 10000;
-        }
-
-        @media (max-width: 768px) {
-            .modal-content-confirm {
-                padding: 20px;
-            }
-        }
-
-        /* Input fields responsive */
-        input.form-control {
-            min-height: 45px;
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            input.form-control {
-                min-height: 40px;
-                font-size: 0.95rem;
-            }
             .input-group {
                 flex-wrap: wrap;
             }
+            .input-group .form-control {
+                min-width: 0;
+                flex: 1;
+                font-size: 16px !important;
+            }
+            .input-group-text {
+                font-size: 0.85rem;
+                padding: 8px 12px;
+                min-width: 80px;
+            }
             .input-group .btn {
-                margin-top: 5px;
+                margin-top: 8px;
                 width: 100%;
-            }
-        }
-
-        /* Button sizes untuk mobile */
-        @media (max-width: 768px) {
-            .btn {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-            }
-            .btn-lg {
-                padding: 0.6rem 1.2rem;
-                font-size: 1rem;
-            }
-        }
-
-        /* Mode Selection Buttons Responsive */
-        @media (max-width: 768px) {
-            .control-btn.btn {
-                padding: 1rem 0.5rem;
-                font-size: 0.9rem;
-            }
-            .control-btn.btn .fs-4 {
-                font-size: 1.5rem !important;
-            }
-        }
-
-        /* Plant Growth Responsive */
-        .plant-growth {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            height: 100px;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .plant-growth {
-                height: 80px;
-                margin-top: 15px;
-            }
-            .plant {
-                width: 20px !important;
-            }
-        }
-
-        .plant {
-            width: 25px;
-            height: 0;
-            background: var(--plant-green);
-            margin: 0 5px;
-            border-radius: 15px 15px 0 0;
-            position: relative;
-            overflow: hidden;
-            animation: growPlant 2s ease-out forwards;
-        }
-
-        .plant::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 5px;
-            right: 5px;
-            height: 10px;
-            background: var(--plant-green);
-            border-radius: 50%;
-        }
-
-        /* Grid system responsive adjustments */
-        @media (max-width: 768px) {
-            .row {
-                margin-left: -8px;
-                margin-right: -8px;
-            }
-            .col, .col-auto, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
-            .col-7, .col-8, .col-9, .col-10, .col-11, .col-12,
-            .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6,
-            .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12,
-            .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6,
-            .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
-                padding-left: 8px;
-                padding-right: 8px;
+                order: 3;
             }
         }
 
         /* Animations */
         @keyframes swim {
-            0% { transform: translateX(-30px) rotateY(0); }
-            25% { transform: translateX(calc(50% - 15px)) rotateY(0); }
-            26% { transform: translateX(calc(50% - 15px)) rotateY(180deg); }
-            75% { transform: translateX(calc(100% - 15px)) rotateY(180deg); }
-            76% { transform: translateX(calc(100% - 15px)) rotateY(0); }
-            100% { transform: translateX(-30px) rotateY(0); }
+            0% { transform: translateX(-25px) rotateY(0); }
+            25% { transform: translateX(calc(50% - 12px)) rotateY(0); }
+            26% { transform: translateX(calc(50% - 12px)) rotateY(180deg); }
+            75% { transform: translateX(calc(100% - 12px)) rotateY(180deg); }
+            76% { transform: translateX(calc(100% - 12px)) rotateY(0); }
+            100% { transform: translateX(-25px) rotateY(0); }
         }
 
         @keyframes bubbleRise {
@@ -1057,7 +1305,7 @@
                 opacity: 0.6;
             }
             100% {
-                transform: translateY(-200px) scale(1.2);
+                transform: translateY(-150px) scale(1.2);
                 opacity: 0;
             }
         }
@@ -1067,7 +1315,7 @@
                 box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
             }
             50% {
-                box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+                box-shadow: 0 0 0 8px rgba(76, 175, 80, 0);
             }
         }
 
@@ -1091,72 +1339,6 @@
             to { transform: rotate(360deg); }
         }
 
-        @keyframes servoIndicatorAppear {
-            0% {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 0;
-            }
-            70% {
-                transform: translate(-50%, -50%) scale(1.1);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes servoIndicatorDisappear {
-            0% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 0;
-            }
-        }
-
-        @keyframes pulseRing {
-            0% {
-                transform: scale(0.8);
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        @keyframes floatParticle {
-            0% {
-                transform: translateY(0) translateX(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(var(--tx)) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes cardPulse {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(255, 152, 0, 0.5);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -1164,7 +1346,7 @@
 
         @keyframes slideInDown {
             from {
-                transform: translateY(-100%);
+                transform: translateY(-30px);
                 opacity: 0;
             }
             to {
@@ -1173,75 +1355,7 @@
             }
         }
 
-        @keyframes slideInLeft {
-            from {
-                transform: translateX(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .quality-indicator {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
-
-        .good { background: var(--safe-green); }
-        .warning { background: #ffc107; }
-        .danger { background: var(--warning-red); }
-
-        .water-drop {
-            width: 20px;
-            height: 20px;
-            background: var(--water-blue);
-            border-radius: 50% 50% 50% 0;
-            transform: rotate(-45deg);
-            display: inline-block;
-            margin-right: 10px;
-            animation: dropFall 2s infinite;
-        }
-
-        @keyframes dropFall {
-            0% { transform: translateY(-20px) rotate(-45deg) scale(0.8); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(20px) rotate(-45deg) scale(1); opacity: 0; }
-        }
-
-        @keyframes growPlant {
-            from { height: 0; }
-            to { height: var(--height); }
-        }
-
-        .sensor-progress {
-            height: 8px;
-            border-radius: 4px;
-            background: #e0e0e0;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .sensor-progress-bar {
-            height: 100%;
-            transition: width 1s ease;
-        }
-
+        /* Notification Container */
         .notification {
             position: fixed;
             bottom: 20px;
@@ -1258,82 +1372,86 @@
                 bottom: 10px;
                 max-width: 100%;
             }
-        }
-
-        .feed-animation {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .feed-particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #ff9800;
-            border-radius: 50%;
-            animation: feedDrop 1s linear forwards;
-        }
-
-        @keyframes feedDrop {
-            0% {
-                transform: translateY(0) scale(1);
-                opacity: 1;
+            .notification .alert {
+                padding: 12px 15px;
+                font-size: 0.9rem;
             }
-            100% {
-                transform: translateY(100px) scale(0.5);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
                 opacity: 0;
             }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        /* Touch-friendly improvements */
+        /* Mobile Optimizations */
         @media (max-width: 768px) {
+            /* Adjust grid system */
+            .row {
+                margin-left: -6px;
+                margin-right: -6px;
+            }
+            
+            .col, .col-auto, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+            .col-7, .col-8, .col-9, .col-10, .col-11, .col-12,
+            .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6,
+            .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12,
+            .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6,
+            .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+                padding-left: 6px;
+                padding-right: 6px;
+            }
+            
+            /* Hide non-essential elements on mobile */
+            .plant-growth {
+                display: none;
+            }
+            
+            .water-drop {
+                display: none;
+            }
+            
+            /* Adjust button sizes for touch */
             button, .btn, .control-btn, .nav-link {
                 min-height: 44px;
                 min-width: 44px;
             }
             
-            input, select, textarea {
-                font-size: 16px !important; /* Mencegah zoom di iOS */
-            }
-        }
-
-        /* Hide unnecessary elements on mobile */
-        @media (max-width: 576px) {
-            .text-end {
-                text-align: center !important;
-                margin-top: 10px;
+            /* Prevent text selection on buttons */
+            button, .btn {
+                user-select: none;
+                -webkit-user-select: none;
             }
             
-            .plant-growth {
-                display: none;
+            /* Improve form input appearance */
+            input, select, textarea {
+                font-size: 16px !important;
+            }
+            
+            /* Fix for overflow issues */
+            .card-body {
+                overflow: hidden;
             }
         }
 
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+        /* Desktop Optimizations */
+        @media (min-width: 769px) {
+            .container {
+                max-width: 1200px;
+            }
         }
 
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
+        /* Fix for iOS Safari */
+        @supports (-webkit-touch-callout: none) {
+            .servo-active-indicator {
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
         }
     </style>
 </head>
@@ -1352,127 +1470,62 @@
         </div>
     </div>
 
-    <!-- Status Containers untuk Mobile -->
-    <div class="d-block d-md-none">
-        <!-- ESP Status Indicator (Mobile) -->
-        <div class="status-container esp-status-container">
-            <div class="card esp-status-card" id="esp-status-card">
-                <div class="card-body p-2">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <div class="esp-status-indicator" id="esp-status-indicator">
-                                <i class="bi bi-wifi"></i>
+    <!-- Main Layout Container -->
+    <div class="container py-3">
+        <!-- Status Row -->
+        <div class="row mb-3 d-flex flex-column flex-md-row">
+            <div class="col-md-4 esp-status-container status-container">
+                <div class="card esp-status-card" id="esp-status-card">
+                    <div class="card-body p-2">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <div class="esp-status-indicator" id="esp-status-indicator">
+                                    <i class="bi bi-wifi"></i>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col">
-                            <h6 class="mb-0" id="esp-status-title">Status Sistem</h6>
-                            <small class="text-muted" id="esp-status-text">
-                                <span id="esp-status-detail">Menghubungkan ke ESP32...</span>
-                            </small>
-                        </div>
-                        <div class="col-auto">
-                            <div id="esp-status-badge">
-                                <span class="badge bg-secondary" id="esp-status-badge-text">OFFLINE</span>
+                            <div class="col">
+                                <h6 class="mb-0" id="esp-status-title">Status Sistem</h6>
+                                <small class="text-muted" id="esp-status-text">
+                                    <span id="esp-status-detail">Menghubungkan ke ESP32...</span>
+                                </small>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mode Indicator (Mobile) -->
-        <div class="status-container mode-indicator-container">
-            <div class="mode-indicator mode-auto" id="mode-indicator">
-                <i class="bi bi-robot"></i> MODE OTOMATIS
-            </div>
-        </div>
-    </div>
-
-    <!-- Status Containers untuk Desktop -->
-    <div class="d-none d-md-block">
-        <!-- ESP Status Indicator (Desktop) -->
-        <div class="status-container esp-status-container">
-            <div class="card esp-status-card" id="esp-status-card-desktop">
-                <div class="card-body p-2">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <div class="esp-status-indicator" id="esp-status-indicator-desktop">
-                                <i class="bi bi-wifi"></i>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <h6 class="mb-0" id="esp-status-title-desktop">Status Sistem</h6>
-                            <small class="text-muted" id="esp-status-text-desktop">
-                                <span id="esp-status-detail-desktop">Menghubungkan ke ESP32...</span>
-                            </small>
-                        </div>
-                        <div class="col-auto">
-                            <div id="esp-status-badge-desktop">
-                                <span class="badge bg-secondary" id="esp-status-badge-text-desktop">OFFLINE</span>
+                            <div class="col-auto">
+                                <div id="esp-status-badge">
+                                    <span class="badge bg-secondary" id="esp-status-badge-text">OFFLINE</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Mode Indicator (Desktop) -->
-        <div class="status-container mode-indicator-container">
-            <div class="mode-indicator mode-auto" id="mode-indicator-desktop">
-                <i class="bi bi-robot"></i> MODE OTOMATIS
+            
+            <div class="col-md-4 offset-md-4 mode-indicator-container status-container">
+                <div class="mode-indicator mode-auto" id="mode-indicator">
+                    <i class="bi bi-robot"></i> MODE OTOMATIS
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Servo Active Indicator -->
-    <div class="servo-active-indicator" id="servo-active-indicator">
-        <div class="servo-active-content">
-            <div class="servo-progress-ring">
-                <svg class="servo-progress-ring-circle">
-                    <circle class="servo-progress-ring-bg" cx="60" cy="60" r="50"></circle>
-                    <circle class="servo-progress-ring-fill" cx="60" cy="60" r="50" id="servo-progress-circle"></circle>
-                </svg>
-                <i class="bi bi-gear-fill servo-gear rotating"></i>
-                <div class="servo-pulse"></div>
-            </div>
-            <div class="feeding-time" id="feeding-time">3.0s</div>
-            <div class="feeding-description">Servo pakan sedang aktif</div>
-            <div class="feeding-particles" id="feeding-particles"></div>
-        </div>
-    </div>
-
-    <!-- Confirmation Modal -->
-    <div class="modal-confirm" id="confirm-modal">
-        <div class="modal-content-confirm">
-            <div class="text-center mb-4">
-                <i class="bi bi-question-circle display-1 text-primary"></i>
-            </div>
-            <h4 class="text-center mb-3" id="confirm-title">Konfirmasi</h4>
-            <p class="text-center text-muted mb-4" id="confirm-message"></p>
-            <div class="d-flex gap-3 flex-column flex-md-row">
-                <button class="btn btn-outline-secondary flex-fill" id="cancel-btn">
-                    <i class="bi bi-x-lg"></i> Batal
-                </button>
-                <button class="btn btn-primary flex-fill" id="confirm-action-btn">
-                    <i class="bi bi-check-lg"></i> Ya, Lanjutkan
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="container py-4">
         <!-- Header -->
-        <div class="dashboard-header animate__animated animate__fadeIn">
+        <div class="dashboard-header">
             <div class="row align-items-center">
                 <div class="col-md-8">
-                    <h1 class="display-5 fw-bold"><i class="bi bi-droplet-half"></i> Smart Aquaponics Dashboard</h1>
-                    <p class="lead mb-0">Sistem Monitoring dan Kontrol Akuaponik Terintegrasi IoT</p>
+                    <h1 class="display-5 fw-bold"><i class="bi bi-droplet-half"></i> Smart Aquaponics</h1>
+                    <p class="lead mb-0">Monitoring & Kontrol Sistem Akuaponik IoT</p>
                 </div>
-                <div class="col-md-4 text-end">
+                <div class="col-md-4 text-end d-none d-md-block">
                     <div class="d-inline-block p-3 rounded-3" style="background: rgba(255,255,255,0.2);">
-                        <div id="current-time" class="h4 mb-0"></div>
+                        <div id="current-time" class="h4 mb-0">00:00:00</div>
                         <small>Waktu Sistem</small>
                     </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Time Display -->
+            <div class="d-block d-md-none text-center mt-2">
+                <div class="d-inline-block p-2 rounded-3" style="background: rgba(255,255,255,0.2);">
+                    <div id="current-time-mobile" class="h5 mb-0">00:00:00</div>
+                    <small>Waktu Sistem</small>
                 </div>
             </div>
             
@@ -1481,24 +1534,78 @@
                 <ul class="nav nav-tabs justify-content-center" id="mainTabs">
                     <li class="nav-item">
                         <button class="nav-link active" id="monitoring-tab" onclick="switchTab('monitoring')">
-                            <i class="bi bi-graph-up"></i> <span class="d-none d-md-inline">Monitoring & Kontrol</span>
-                            <span class="d-inline d-md-none">Monitoring</span>
+                            <i class="bi bi-graph-up"></i> Monitoring
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" id="calibration-tab" onclick="switchTab('calibration')">
-                            <i class="bi bi-tools"></i> <span class="d-none d-md-inline">Kalibrasi</span>
-                            <span class="d-inline d-md-none">Kalibrasi</span>
+                            <i class="bi bi-tools"></i> Kalibrasi
                         </button>
                     </li>
                 </ul>
             </div>
         </div>
 
+        <!-- Servo Active Indicator - BARU RESPONSIF -->
+        <div class="servo-active-indicator" id="servo-active-indicator">
+            <div class="servo-active-content">
+                <div class="servo-header">
+                    <i class="bi bi-gear-fill servo-gear rotating"></i>
+                    <h3 class="servo-title">PEMBERIAN PAKAN</h3>
+                </div>
+                
+                <div class="servo-progress-container">
+                    <div class="servo-progress-ring">
+                        <svg class="servo-progress-ring-circle" viewBox="0 0 120 120">
+                            <circle class="servo-progress-ring-bg" cx="60" cy="60" r="54"></circle>
+                            <circle class="servo-progress-ring-fill" cx="60" cy="60" r="54" 
+                                    stroke-dasharray="339" stroke-dashoffset="339" id="servo-progress-circle"></circle>
+                        </svg>
+                        <div class="servo-progress-text">
+                            <span class="feeding-time" id="feeding-time">3.0</span>
+                            <small>DETIK</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="servo-status">
+                    <div class="servo-status-text" id="servo-status-text">Servo pakan sedang aktif...</div>
+                    <div class="servo-status-subtext">Silakan tunggu hingga proses selesai</div>
+                </div>
+                
+                <div class="servo-particles" id="servo-particles"></div>
+                
+                <div class="servo-action">
+                    <button class="btn btn-sm btn-outline-light" onclick="skipFeeding()" id="skip-btn">
+                        <i class="bi bi-skip-forward"></i> Lewati
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div class="modal-confirm" id="confirm-modal">
+            <div class="modal-content-confirm">
+                <div class="text-center mb-3">
+                    <i class="bi bi-question-circle display-1 text-primary"></i>
+                </div>
+                <h4 class="text-center mb-3" id="confirm-title">Konfirmasi</h4>
+                <p class="text-center text-muted mb-4" id="confirm-message"></p>
+                <div class="d-flex gap-2 flex-column flex-md-row">
+                    <button class="btn btn-outline-secondary flex-fill" id="cancel-btn">
+                        <i class="bi bi-x-lg"></i> Batal
+                    </button>
+                    <button class="btn btn-primary flex-fill" id="confirm-action-btn">
+                        <i class="bi bi-check-lg"></i> Ya, Lanjutkan
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Monitoring Section -->
         <div id="monitoring-section" class="content-section active">
             <!-- Water Quality Monitoring -->
-            <div class="row mb-4">
+            <div class="row mb-3">
                 <div class="col-lg-8">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -1509,19 +1616,17 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row align-items-center">
                                 <!-- Water Tank with Animation -->
                                 <div class="col-md-4 text-center mb-3 mb-md-0">
-                                    <div class="water-tank-container mb-3">
-                                        <div class="water-tank">
+                                    <div class="water-tank-container">
+                                        <div class="water-tank" id="water-tank">
                                             <div class="water-level" id="water-level-visual"></div>
-                                            <!-- Fish will be added by JavaScript -->
                                         </div>
                                     </div>
-                                    <div class="water-drop"></div>
                                     <h3 class="value-display d-inline" id="water-level">0</h3>
                                     <span class="value-unit">cm</span>
-                                    <p class="text-muted mt-2">Level Air Kolam Ikan</p>
+                                    <p class="text-muted mt-2">Level Air Kolam</p>
                                 </div>
 
                                 <!-- Sensor Readings -->
@@ -1535,9 +1640,9 @@
                                                         <h2 class="value-display" id="ph-value">7.0</h2>
                                                         <small class="text-muted">Optimal: 6.5-7.5</small>
                                                     </div>
-                                                    <i class="bi bi-droplet fs-1" style="color: #9c27b0;"></i>
+                                                    <i class="bi bi-droplet" style="color: #9c27b0;"></i>
                                                 </div>
-                                                <div class="sensor-progress">
+                                                <div class="sensor-progress mt-2">
                                                     <div id="ph-progress" class="sensor-progress-bar" style="width: 50%; background: #9c27b0;"></div>
                                                 </div>
                                             </div>
@@ -1552,9 +1657,9 @@
                                                         <span class="value-unit">ppm</span>
                                                         <small class="text-muted d-block mt-1">Total Dissolved Solids</small>
                                                     </div>
-                                                    <i class="bi bi-speedometer2 fs-1" style="color: #2196f3;"></i>
+                                                    <i class="bi bi-speedometer2" style="color: #2196f3;"></i>
                                                 </div>
-                                                <div class="sensor-progress">
+                                                <div class="sensor-progress mt-2">
                                                     <div id="tds-progress" class="sensor-progress-bar" style="width: 60%; background: #2196f3;"></div>
                                                 </div>
                                             </div>
@@ -1569,22 +1674,13 @@
                                                         <span class="value-unit">NTU</span>
                                                         <small class="text-muted d-block mt-1">Kejernihan Air</small>
                                                     </div>
-                                                    <i class="bi bi-cloud-fog fs-1" style="color: #ff9800;"></i>
+                                                    <i class="bi bi-cloud-fog" style="color: #ff9800;"></i>
                                                 </div>
-                                                <div class="sensor-progress">
+                                                <div class="sensor-progress mt-2">
                                                     <div id="turbidity-progress" class="sensor-progress-bar" style="width: 30%; background: #ff9800;"></div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <!-- Plant Growth Animation -->
-                                    <div class="plant-growth d-none d-md-flex">
-                                        <div class="plant" style="--height: 60px; animation-delay: 0.2s;"></div>
-                                        <div class="plant" style="--height: 80px; animation-delay: 0.4s;"></div>
-                                        <div class="plant" style="--height: 40px; animation-delay: 0.6s;"></div>
-                                        <div class="plant" style="--height: 70px; animation-delay: 0.8s;"></div>
-                                        <div class="plant" style="--height: 50px; animation-delay: 1s;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1598,21 +1694,20 @@
                         <div class="card-header">
                             <h4 class="mb-0"><i class="bi bi-bucket"></i> Stok Pakan</h4>
                         </div>
-                        <div class="card-body text-center">
-                            <div class="feed-container mb-3">
+                        <div class="card-body text-center d-flex flex-column justify-content-center">
+                            <div class="feed-container mb-3 mx-auto">
                                 <div class="feed-level" id="feed-level-visual"></div>
-                                <div class="feed-animation" id="feed-animation"></div>
                             </div>
                             <h2 class="value-display" id="feed-level">25</h2>
                             <span class="value-unit">cm</span>
                             <p class="text-muted mt-2">Sisa Stok Pakan</p>
                             
-                            <div class="mt-4">
+                            <div class="mt-3 w-100">
                                 <div class="d-flex justify-content-between mb-2">
                                     <span>Kapasitas</span>
                                     <span id="feed-percentage">85%</span>
                                 </div>
-                                <div class="progress" style="height: 15px; border-radius: 10px;">
+                                <div class="progress" style="height: 12px; border-radius: 6px;">
                                     <div id="feed-progress-bar" class="progress-bar bg-success" style="width: 85%;"></div>
                                 </div>
                             </div>
@@ -1625,35 +1720,35 @@
                 </div>
             </div>
 
-            <!-- System Control with Status Indicators -->
-            <div class="row mb-4">
+            <!-- System Control -->
+            <div class="row mb-3">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="mb-0"><i class="bi bi-sliders"></i> Kontrol Sistem</h4>
                         </div>
                         <div class="card-body">
-                            <!-- Mode Selection Buttons -->
-                            <div class="row mb-4">
-                                <div class="col-md-6 mb-3">
-                                    <button class="control-btn btn btn-success w-100 py-3" onclick="setMode('auto')" id="btn-mode-auto">
-                                        <i class="bi bi-robot fs-4"></i>
-                                        <div class="mt-2">Mode Otomatis</div>
+                            <!-- Mode Selection -->
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-2">
+                                    <button class="control-btn btn btn-success w-100 py-2" onclick="setMode('auto')" id="btn-mode-auto">
+                                        <i class="bi bi-robot fs-5"></i>
+                                        <div class="mt-1">Mode Otomatis</div>
                                         <small class="d-none d-md-block">Sistem berjalan sendiri berdasarkan sensor</small>
                                     </button>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <button class="control-btn btn btn-warning w-100 py-3" onclick="setMode('manual')" id="btn-mode-manual">
-                                        <i class="bi bi-hand-index fs-4"></i>
-                                        <div class="mt-2">Mode Manual</div>
+                                <div class="col-md-6 mb-2">
+                                    <button class="control-btn btn btn-warning w-100 py-2" onclick="setMode('manual')" id="btn-mode-manual">
+                                        <i class="bi bi-hand-index fs-5"></i>
+                                        <div class="mt-1">Mode Manual</div>
                                         <small class="d-none d-md-block">Kontrol manual semua perangkat</small>
                                     </button>
                                 </div>
                             </div>
 
-                            <!-- Control Cards with Status on Top -->
+                            <!-- Control Cards -->
                             <div class="row">
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3 col-6 mb-3">
                                     <div class="control-card">
                                         <div class="control-status status-off" id="pompa-isi-status-indicator"></div>
                                         <i class="bi bi-droplet control-icon"></i>
@@ -1670,7 +1765,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3 col-6 mb-3">
                                     <div class="control-card">
                                         <div class="control-status status-off" id="pompa-buang-status-indicator"></div>
                                         <i class="bi bi-droplet-fill control-icon"></i>
@@ -1687,7 +1782,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3 col-6 mb-3">
                                     <div class="control-card">
                                         <div class="control-status status-off" id="irigasi-status-indicator"></div>
                                         <i class="bi bi-droplet control-icon"></i>
@@ -1704,27 +1799,27 @@
                                     </div>
                                 </div>
 
-                                <!-- Feed Control Card dengan Slider -->
-                                <div class="col-md-3 mb-3">
+                                <!-- Feed Control -->
+                                <div class="col-md-3 col-6 mb-3">
                                     <div class="feed-management-card" id="feed-control-card">
                                         <div class="row">
-                                            <div class="col-12 mb-3">
+                                            <div class="col-12 mb-2">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <h5 class="mb-0">Kontrol Pakan</h5>
                                                     <div class="control-status status-off" id="servo-status-indicator"></div>
                                                 </div>
                                             </div>
                                             
-                                            <div class="col-12">
-                                                <button class="control-btn btn-on w-100 mb-3" onclick="feedNow()" id="feed-now-btn">
+                                            <div class="col-12 mb-2">
+                                                <button class="control-btn btn-on w-100" onclick="feedNow()" id="feed-now-btn">
                                                     <i class="bi bi-bucket-fill"></i> BERI PAKAN
                                                 </button>
                                             </div>
 
-                                            <!-- Slider untuk Jumlah Pakan -->
+                                            <!-- Slider -->
                                             <div class="col-12">
                                                 <div class="slider-container">
-                                                    <h6 class="mb-3">Jumlah Pakan:</h6>
+                                                    <h6 class="mb-2">Jumlah Pakan:</h6>
                                                     <input type="range" min="1" max="100" value="50" class="custom-slider" id="feed-amount-slider">
                                                     
                                                     <div class="slider-labels">
@@ -1742,13 +1837,68 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Riwayat Pakan Terakhir -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="feed-history-card" id="feed-history-card">
+                        <div class="feed-history-header">
+                            <h5 class="feed-history-title">
+                                <i class="bi bi-clock-history me-2"></i>Riwayat Pakan Terakhir
+                            </h5>
+                            <button class="btn btn-sm btn-outline-primary" onclick="clearFeedHistory()">
+                                <i class="bi bi-trash"></i> Hapus
+                            </button>
+                        </div>
+                        
+                        <div class="feed-history-content" id="feed-history-content">
+                            <!-- Konten riwayat akan dimuat di sini -->
+                            <div class="feed-history-empty" id="feed-history-empty">
+                                <i class="bi bi-info-circle d-block mb-2" style="font-size: 2rem;"></i>
+                                Belum ada riwayat pakan
+                            </div>
+                            
+                            <div id="feed-history-details" style="display: none;">
+                                <div class="feed-history-item">
+                                    <span class="feed-history-label">Status Terakhir:</span>
+                                    <span class="feed-history-value success" id="last-feed-status">Selesai</span>
+                                </div>
+                                
+                                <div class="feed-history-item">
+                                    <span class="feed-history-label">Waktu:</span>
+                                    <span class="feed-history-value" id="last-feed-time">-</span>
+                                </div>
+                                
+                                <div class="feed-history-item">
+                                    <span class="feed-history-label">Durasi:</span>
+                                    <span class="feed-history-value" id="last-feed-duration">-</span>
+                                </div>
+                                
+                                <div class="feed-history-item">
+                                    <span class="feed-history-label">Jumlah Pakan:</span>
+                                    <span class="feed-history-value" id="last-feed-amount">-</span>
+                                </div>
+                                
+                                <div class="feed-history-item">
+                                    <span class="feed-history-label">Mode:</span>
+                                    <span class="feed-history-value" id="last-feed-mode">-</span>
+                                </div>
+                                
+                                <div class="feed-history-timestamp" id="last-feed-timestamp">
+                                    Terakhir diperbarui: -
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Calibration Section -->
         <div id="calibration-section" class="content-section">
             <div class="row">
                 <!-- Calibration Controls -->
-                <div class="col-md-8 mb-4">
+                <div class="col-md-8 mb-3">
                     <div class="card h-100">
                         <div class="card-header">
                             <h4 class="mb-0"><i class="bi bi-sliders"></i> Kalibrasi Offset Sensor</h4>
@@ -1756,15 +1906,15 @@
                         <div class="card-body">
                             <!-- Level Air -->
                             <div class="calibration-step active" id="step-air">
-                                <div class="d-flex align-items-center mb-3">
+                                <div class="d-flex align-items-center mb-2">
                                     <span class="calibration-step-number">1</span>
                                     <h5 class="mb-0">Kalibrasi Level Air</h5>
                                 </div>
-                                <p class="text-muted mb-3">Atur offset untuk kalibrasi sensor level air.</p>
+                                <p class="text-muted mb-2">Atur offset untuk kalibrasi sensor level air.</p>
                                 
                                 <div class="mb-3">
                                     <label class="form-label">Nilai Terbaca: <span class="fw-bold" id="read-value-air">35.0 cm</span></label>
-                                    <div class="input-group mb-3">
+                                    <div class="input-group mb-2">
                                         <span class="input-group-text">Offset (cm)</span>
                                         <input type="number" class="form-control" id="offset-air" step="0.1" placeholder="0.0">
                                         <button class="btn btn-outline-primary" onclick="setOffsetCalibration('air', this)">
@@ -1789,15 +1939,15 @@
 
                             <!-- pH -->
                             <div class="calibration-step" id="step-ph">
-                                <div class="d-flex align-items-center mb-3">
+                                <div class="d-flex align-items-center mb-2">
                                     <span class="calibration-step-number">2</span>
                                     <h5 class="mb-0">Kalibrasi pH Meter</h5>
                                 </div>
-                                <p class="text-muted mb-3">Atur offset untuk kalibrasi sensor pH.</p>
+                                <p class="text-muted mb-2">Atur offset untuk kalibrasi sensor pH.</p>
                                 
                                 <div class="mb-3">
                                     <label class="form-label">Nilai Terbaca: <span class="fw-bold" id="read-value-ph">7.2 pH</span></label>
-                                    <div class="input-group mb-3">
+                                    <div class="input-group mb-2">
                                         <span class="input-group-text">Offset (pH)</span>
                                         <input type="number" class="form-control" id="offset-ph" step="0.01" placeholder="0.00">
                                         <button class="btn btn-outline-primary" onclick="setOffsetCalibration('ph', this)">
@@ -1822,15 +1972,15 @@
 
                             <!-- TDS -->
                             <div class="calibration-step" id="step-tds">
-                                <div class="d-flex align-items-center mb-3">
+                                <div class="d-flex align-items-center mb-2">
                                     <span class="calibration-step-number">3</span>
                                     <h5 class="mb-0">Kalibrasi TDS</h5>
                                 </div>
-                                <p class="text-muted mb-3">Atur offset untuk kalibrasi sensor TDS.</p>
+                                <p class="text-muted mb-2">Atur offset untuk kalibrasi sensor TDS.</p>
                                 
                                 <div class="mb-3">
                                     <label class="form-label">Nilai Terbaca: <span class="fw-bold" id="read-value-tds">850 ppm</span></label>
-                                    <div class="input-group mb-3">
+                                    <div class="input-group mb-2">
                                         <span class="input-group-text">Offset (ppm)</span>
                                         <input type="number" class="form-control" id="offset-tds" step="1" placeholder="0">
                                         <button class="btn btn-outline-primary" onclick="setOffsetCalibration('tds', this)">
@@ -1852,79 +2002,13 @@
                                     <small class="text-muted">Gunakan larutan kalibrasi 1413 µS/cm atau 1000 ppm sebagai referensi.</small>
                                 </div>
                             </div>
-
-                            <!-- Turbidity -->
-                            <div class="calibration-step" id="step-turbidity">
-                                <div class="d-flex align-items-center mb-3">
-                                    <span class="calibration-step-number">4</span>
-                                    <h5 class="mb-0">Kalibrasi Sensor Kekeruhan</h5>
-                                </div>
-                                <p class="text-muted mb-3">Atur offset untuk kalibrasi sensor kekeruhan.</p>
-                                
-                                <div class="mb-3">
-                                    <label class="form-label">Nilai Terbaca: <span class="fw-bold" id="read-value-turbidity">12.5 NTU</span></label>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text">Offset (NTU)</span>
-                                        <input type="number" class="form-control" id="offset-turbidity" step="0.1" placeholder="0.0">
-                                        <button class="btn btn-outline-primary" onclick="setOffsetCalibration('turbidity', this)">
-                                            <i class="bi bi-check-lg"></i> Terapkan
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div class="auto-calibration">
-                                    <h6><i class="bi bi-robot"></i> Auto Kalibrasi</h6>
-                                    <p class="text-muted small">Masukkan nilai referensi aktual untuk kalibrasi otomatis.</p>
-                                    <div class="input-group mb-2">
-                                        <span class="input-group-text">Nilai Referensi</span>
-                                        <input type="number" class="form-control" id="reference-turbidity" step="0.1" value="0.0">
-                                        <button class="btn btn-success" onclick="autoCalibrate('turbidity')">
-                                            <i class="bi bi-gear"></i> Auto Kalibrasi
-                                        </button>
-                                    </div>
-                                    <small class="text-muted">Gunakan air jernih (0 NTU) atau larutan standar sebagai referensi.</small>
-                                </div>
-                            </div>
-
-                            <!-- Level Pakan -->
-                            <div class="calibration-step" id="step-feed">
-                                <div class="d-flex align-items-center mb-3">
-                                    <span class="calibration-step-number">5</span>
-                                    <h5 class="mb-0">Kalibrasi Level Pakan</h5>
-                                </div>
-                                <p class="text-muted mb-3">Atur offset untuk kalibrasi sensor level pakan.</p>
-                                
-                                <div class="mb-3">
-                                    <label class="form-label">Nilai Terbaca: <span class="fw-bold" id="read-value-feed">22.0 cm</span></label>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text">Offset (cm)</span>
-                                        <input type="number" class="form-control" id="offset-feed" step="0.1" placeholder="0.0">
-                                        <button class="btn btn-outline-primary" onclick="setOffsetCalibration('feed', this)">
-                                            <i class="bi bi-check-lg"></i> Terapkan
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div class="auto-calibration">
-                                    <h6><i class="bi bi-robot"></i> Auto Kalibrasi</h6>
-                                    <p class="text-muted small">Masukkan nilai referensi aktual untuk kalibrasi otomatis.</p>
-                                    <div class="input-group mb-2">
-                                        <span class="input-group-text">Nilai Referensi</span>
-                                        <input type="number" class="form-control" id="reference-feed" step="0.1" value="25.0">
-                                        <button class="btn btn-success" onclick="autoCalibrate('feed')">
-                                            <i class="bi bi-gear"></i> Auto Kalibrasi
-                                        </button>
-                                    </div>
-                                    <small class="text-muted">Isi pakan ke level tertentu (misal 25 cm) sebagai referensi.</small>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 mb-4">
+                <div class="col-md-4 mb-3">
                     <!-- System Settings -->
-                    <div class="card mb-4">
+                    <div class="card mb-3">
                         <div class="card-header">
                             <h4 class="mb-0"><i class="bi bi-gear"></i> Pengaturan Sistem</h4>
                         </div>
@@ -1938,19 +2022,16 @@
                             <div class="mb-3">
                                 <label class="form-label">Threshold Peringatan Level Air Rendah (cm)</label>
                                 <input type="number" class="form-control" id="warning-water-low" value="15" step="0.1">
-                                <div class="form-text">Peringatan akan muncul jika level air di bawah nilai ini</div>
                             </div>
                             
                             <div class="mb-3">
                                 <label class="form-label">Threshold Peringatan Level Air Tinggi (cm)</label>
                                 <input type="number" class="form-control" id="warning-water-high" value="55" step="0.1">
-                                <div class="form-text">Peringatan akan muncul jika level air di atas nilai ini</div>
                             </div>
                             
                             <div class="mb-3">
                                 <label class="form-label">Threshold Peringatan Level Pakan (cm)</label>
                                 <input type="number" class="form-control" id="warning-feed" value="5" step="0.1">
-                                <div class="form-text">Peringatan akan muncul jika level pakan di bawah nilai ini</div>
                             </div>
                             
                             <div class="d-grid gap-2 mt-4">
@@ -1958,7 +2039,7 @@
                                     <i class="bi bi-save"></i> Simpan Pengaturan
                                 </button>
                                 <button class="btn btn-outline-danger" onclick="confirmResetCalibration()" id="btn-reset-calibration">
-                                    <i class="bi bi-arrow-clockwise"></i> Reset Semua Kalibrasi
+                                    <i class="bi bi-arrow-clockwise"></i> Reset Kalibrasi
                                 </button>
                             </div>
                         </div>
@@ -1967,12 +2048,12 @@
                     <!-- Last Calibration History -->
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="mb-0"><i class="bi bi-clock-history"></i> Riwayat Kalibrasi Terakhir</h4>
+                            <h4 class="mb-0"><i class="bi bi-clock-history"></i> Riwayat Kalibrasi</h4>
                         </div>
                         <div class="card-body">
                             <div id="calibration-history-container">
-                                <div class="text-center text-muted py-4" id="empty-history">
-                                    <i class="bi bi-clock-history display-4 mb-3"></i>
+                                <div class="text-center text-muted py-3" id="empty-history">
+                                    <i class="bi bi-clock-history display-4 mb-2"></i>
                                     <p>Belum ada riwayat kalibrasi</p>
                                 </div>
                                 
@@ -2010,7 +2091,7 @@
         // Variabel untuk ESP32 Status
         let espOnline = false;
         let lastHeartbeatTime = 0;
-        const HEARTBEAT_TIMEOUT = 10000; // 10 detik timeout
+        const HEARTBEAT_TIMEOUT = 10000;
         
         // Variabel untuk Kalibrasi
         let lastCalibrationData = JSON.parse(localStorage.getItem('lastCalibrationData')) || {
@@ -2019,6 +2100,22 @@
             tds: null,
             turbidity: null,
             feed: null
+        };
+        
+        // Variabel untuk animasi servo baru
+        let servoParticlesInterval = null;
+        let servoProgressInterval = null;
+        let servoRemainingTime = 0;
+        let servoTotalTime = 0;
+        
+        // Variabel untuk Riwayat Pakan
+        let lastFeedingHistory = JSON.parse(localStorage.getItem('lastFeedingHistory')) || {
+            timestamp: null,
+            duration: 0,
+            amount: 0,
+            status: 'idle', // idle, active, completed, skipped, error
+            mode: 'manual', // manual, auto
+            feedCode: '2' // 1, 2, 3
         };
         
         // Data sensor saat ini
@@ -2068,128 +2165,55 @@
         // FUNGSI ESP32 STATUS MANAGEMENT
         // ============================================
 
-        // Fungsi untuk update status ESP32
         function updateESPStatus(online) {
             espOnline = online;
             const now = Date.now();
             
-            // Update untuk mobile
             const statusCard = document.getElementById('esp-status-card');
             const statusIndicator = document.getElementById('esp-status-indicator');
-            const statusTitle = document.getElementById('esp-status-title');
             const statusDetail = document.getElementById('esp-status-detail');
             const statusBadge = document.getElementById('esp-status-badge-text');
-            
-            // Update untuk desktop
-            const statusCardDesktop = document.getElementById('esp-status-card-desktop');
-            const statusIndicatorDesktop = document.getElementById('esp-status-indicator-desktop');
-            const statusTitleDesktop = document.getElementById('esp-status-title-desktop');
-            const statusDetailDesktop = document.getElementById('esp-status-detail-desktop');
-            const statusBadgeDesktop = document.getElementById('esp-status-badge-text-desktop');
-            
             const overlay = document.getElementById('esp-offline-overlay');
             
             if (online) {
                 lastHeartbeatTime = now;
                 
-                // Update tampilan - ONLINE (Mobile)
-                if (statusCard) {
-                    statusCard.classList.remove('offline');
-                    statusCard.classList.add('online');
-                }
-                if (statusIndicator) {
-                    statusIndicator.classList.remove('offline');
-                    statusIndicator.classList.add('online');
-                    statusIndicator.innerHTML = '<i class="bi bi-wifi"></i>';
-                }
-                if (statusTitle) statusTitle.textContent = 'Status Sistem';
-                if (statusDetail) statusDetail.textContent = 'Terhubung ke ESP32 & Server';
-                if (statusBadge) {
-                    statusBadge.textContent = 'ONLINE';
-                    statusBadge.className = 'badge bg-success';
-                }
-                
-                // Update tampilan - ONLINE (Desktop)
-                if (statusCardDesktop) {
-                    statusCardDesktop.classList.remove('offline');
-                    statusCardDesktop.classList.add('online');
-                }
-                if (statusIndicatorDesktop) {
-                    statusIndicatorDesktop.classList.remove('offline');
-                    statusIndicatorDesktop.classList.add('online');
-                    statusIndicatorDesktop.innerHTML = '<i class="bi bi-wifi"></i>';
-                }
-                if (statusTitleDesktop) statusTitleDesktop.textContent = 'Status Sistem';
-                if (statusDetailDesktop) statusDetailDesktop.textContent = 'Terhubung ke ESP32 & Server';
-                if (statusBadgeDesktop) {
-                    statusBadgeDesktop.textContent = 'ONLINE';
-                    statusBadgeDesktop.className = 'badge bg-success';
-                }
-                
-                // Update mode indicator
-                const modeIndicator = document.getElementById('mode-indicator');
-                const modeIndicatorDesktop = document.getElementById('mode-indicator-desktop');
-                if (modeIndicator) {
-                    modeIndicator.innerHTML = '<i class="bi bi-robot"></i> MODE OTOMATIS';
-                    modeIndicator.className = 'mode-indicator mode-auto';
-                }
-                if (modeIndicatorDesktop) {
-                    modeIndicatorDesktop.innerHTML = '<i class="bi bi-robot"></i> MODE OTOMATIS';
-                    modeIndicatorDesktop.className = 'mode-indicator mode-auto';
-                }
+                // Update tampilan - ONLINE
+                statusCard.classList.remove('offline');
+                statusCard.classList.add('online');
+                statusIndicator.classList.remove('offline');
+                statusIndicator.classList.add('online');
+                statusIndicator.innerHTML = '<i class="bi bi-wifi"></i>';
+                statusDetail.textContent = 'Terhubung ke ESP32 & Server';
+                statusBadge.textContent = 'ONLINE';
+                statusBadge.className = 'badge bg-success';
                 
                 // Sembunyikan overlay
-                if (overlay) overlay.classList.remove('active');
+                overlay.classList.remove('active');
                 
                 // Enable kontrol berdasarkan mode
                 updateControlState();
                 
             } else {
-                // Update tampilan - OFFLINE (Mobile)
-                if (statusCard) {
-                    statusCard.classList.remove('online');
-                    statusCard.classList.add('offline');
-                }
-                if (statusIndicator) {
-                    statusIndicator.classList.remove('online');
-                    statusIndicator.classList.add('offline');
-                    statusIndicator.innerHTML = '<i class="bi bi-wifi-off"></i>';
-                }
-                if (statusTitle) statusTitle.textContent = 'Status Sistem';
-                if (statusDetail) statusDetail.textContent = 'ESP32 tidak terdeteksi';
-                if (statusBadge) {
-                    statusBadge.textContent = 'OFFLINE';
-                    statusBadge.className = 'badge bg-danger';
-                }
-                
-                // Update tampilan - OFFLINE (Desktop)
-                if (statusCardDesktop) {
-                    statusCardDesktop.classList.remove('online');
-                    statusCardDesktop.classList.add('offline');
-                }
-                if (statusIndicatorDesktop) {
-                    statusIndicatorDesktop.classList.remove('online');
-                    statusIndicatorDesktop.classList.add('offline');
-                    statusIndicatorDesktop.innerHTML = '<i class="bi bi-wifi-off"></i>';
-                }
-                if (statusTitleDesktop) statusTitleDesktop.textContent = 'Status Sistem';
-                if (statusDetailDesktop) statusDetailDesktop.textContent = 'ESP32 tidak terdeteksi';
-                if (statusBadgeDesktop) {
-                    statusBadgeDesktop.textContent = 'OFFLINE';
-                    statusBadgeDesktop.className = 'badge bg-danger';
-                }
+                // Update tampilan - OFFLINE
+                statusCard.classList.remove('online');
+                statusCard.classList.add('offline');
+                statusIndicator.classList.remove('online');
+                statusIndicator.classList.add('offline');
+                statusIndicator.innerHTML = '<i class="bi bi-wifi-off"></i>';
+                statusDetail.textContent = 'ESP32 tidak terdeteksi';
+                statusBadge.textContent = 'OFFLINE';
+                statusBadge.className = 'badge bg-danger';
                 
                 // Tampilkan overlay
-                if (overlay) overlay.classList.add('active');
+                overlay.classList.add('active');
                 
                 // DISABLE SEMUA KONTROL
                 disableAllControls();
             }
         }
 
-        // Fungsi untuk disable semua kontrol saat ESP32 offline
         function disableAllControls() {
-            // Semua tombol kontrol
             const controlButtons = [
                 'btn-pompa-isi-on', 'btn-pompa-isi-off',
                 'btn-pompa-buang-on', 'btn-pompa-buang-off',
@@ -2204,58 +2228,31 @@
                     button.disabled = true;
                     button.style.opacity = '0.5';
                     button.style.cursor = 'not-allowed';
-                    button.title = 'ESP32 offline';
                 }
             });
             
-            // Slider
             const slider = document.getElementById('feed-amount-slider');
             if (slider) {
                 slider.disabled = true;
                 slider.style.opacity = '0.5';
             }
-            
-            // Tombol kalibrasi
-            const calButtons = document.querySelectorAll('[onclick*="setOffsetCalibration"], [onclick*="autoCalibrate"]');
-            calButtons.forEach(btn => {
-                btn.disabled = true;
-                btn.style.opacity = '0.5';
-                btn.style.cursor = 'not-allowed';
-                btn.title = 'ESP32 offline';
-            });
-            
-            // Tombol pengaturan
-            const settingButtons = ['btn-save-settings', 'btn-reset-calibration'];
-            settingButtons.forEach(buttonId => {
-                const button = document.getElementById(buttonId);
-                if (button) {
-                    button.disabled = true;
-                    button.style.opacity = '0.5';
-                    button.style.cursor = 'not-allowed';
-                }
-            });
         }
 
-        // Fungsi untuk update kontrol berdasarkan status ESP dan mode
         function updateControlState() {
             if (!espOnline) {
                 disableAllControls();
                 return;
             }
             
-            // ESP online, perbarui berdasarkan mode
             if (currentMode === 'manual') {
                 enableManualControls();
             } else {
                 disableManualControls();
             }
             
-            // Selalu enable tombol mode jika ESP online
             enableModeButtons();
-            enableCalibrationButtons();
         }
 
-        // Fungsi untuk enable manual controls
         function enableManualControls() {
             const manualButtons = [
                 'btn-pompa-isi-on', 'btn-pompa-isi-off',
@@ -2270,7 +2267,6 @@
                     button.disabled = false;
                     button.style.opacity = '1';
                     button.style.cursor = 'pointer';
-                    button.title = '';
                 }
             });
             
@@ -2281,7 +2277,6 @@
             }
         }
 
-        // Fungsi untuk disable manual controls (hanya manual, bukan mode)
         function disableManualControls() {
             const manualButtons = [
                 'btn-pompa-isi-on', 'btn-pompa-isi-off',
@@ -2296,7 +2291,6 @@
                     button.disabled = true;
                     button.style.opacity = '0.5';
                     button.style.cursor = 'not-allowed';
-                    button.title = 'Mode otomatis aktif';
                 }
             });
             
@@ -2307,7 +2301,6 @@
             }
         }
 
-        // Fungsi untuk enable mode buttons
         function enableModeButtons() {
             const modeButtons = ['btn-mode-auto', 'btn-mode-manual'];
             modeButtons.forEach(buttonId => {
@@ -2316,39 +2309,16 @@
                     button.disabled = false;
                     button.style.opacity = '1';
                     button.style.cursor = 'pointer';
-                    button.title = '';
                 }
             });
         }
 
-        // Fungsi untuk enable calibration buttons
-        function enableCalibrationButtons() {
-            const calButtons = document.querySelectorAll('[onclick*="setOffsetCalibration"], [onclick*="autoCalibrate"]');
-            calButtons.forEach(btn => {
-                btn.disabled = false;
-                btn.style.opacity = '1';
-                btn.style.cursor = 'pointer';
-                btn.title = '';
-            });
-            
-            const settingButtons = ['btn-save-settings', 'btn-reset-calibration'];
-            settingButtons.forEach(buttonId => {
-                const button = document.getElementById(buttonId);
-                if (button) {
-                    button.disabled = false;
-                    button.style.opacity = '1';
-                    button.style.cursor = 'pointer';
-                }
-            });
-        }
-
-        // Heartbeat checker
         function startHeartbeatChecker() {
             setInterval(() => {
                 const now = Date.now();
                 if (lastHeartbeatTime > 0 && (now - lastHeartbeatTime) > HEARTBEAT_TIMEOUT) {
                     if (espOnline) {
-                        console.log('Heartbeat timeout - ESP32 dianggap offline');
+                        console.log('Heartbeat timeout - ESP32 offline');
                         updateESPStatus(false);
                         showNotification('ESP32 terputus - Sistem offline', 'danger');
                     }
@@ -2360,21 +2330,21 @@
         // FUNGSI MONITORING
         // ============================================
 
-        // Generate fish in water tank
         function generateWaterAnimations() {
-            const tank = document.querySelector('.water-tank');
+            const tank = document.getElementById('water-tank');
             if (!tank) return;
             
             // Clear existing fish
             tank.querySelectorAll('.fish').forEach(fish => fish.remove());
+            tank.querySelectorAll('.bubble').forEach(bubble => bubble.remove());
             
             // Add fish
             for (let i = 0; i < 3; i++) {
                 const fish = document.createElement('div');
                 fish.className = 'fish';
-                fish.style.bottom = `${20 + i * 30}%`;
-                fish.style.left = `${10 + i * 20}%`;
-                fish.style.animationDelay = `${i * 2}s`;
+                fish.style.bottom = `${15 + i * 25}%`;
+                fish.style.left = `${10 + i * 25}%`;
+                fish.style.animationDelay = `${i * 1.5}s`;
                 tank.appendChild(fish);
             }
             
@@ -2382,40 +2352,34 @@
             setInterval(() => {
                 const bubble = document.createElement('div');
                 bubble.className = 'bubble';
-                const bubbleSize = 5 + Math.random() * 10;
-                bubble.style.width = `${bubbleSize}px`;
-                bubble.style.height = `${bubbleSize}px`;
+                const size = 3 + Math.random() * 8;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
                 bubble.style.left = `${30 + Math.random() * 40}%`;
                 bubble.style.bottom = '0';
-                bubble.style.animationDuration = `${2 + Math.random() * 3}s`;
+                bubble.style.animationDuration = `${1.5 + Math.random() * 2}s`;
                 tank.appendChild(bubble);
                 
-                // Remove bubble after animation
-                setTimeout(() => bubble.remove(), 4000);
-            }, 500);
+                setTimeout(() => bubble.remove(), 3500);
+            }, 800);
         }
 
-        // Update time
         function updateTime() {
             const now = new Date();
-            const timeElement = document.getElementById('current-time');
-            if (timeElement) {
-                timeElement.textContent = 
-                    now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            }
+            const timeString = now.toLocaleTimeString('id-ID', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            
+            document.getElementById('current-time').textContent = timeString;
+            document.getElementById('current-time-mobile').textContent = timeString;
         }
 
-        // Update water condition indicator
         function updateWaterCondition() {
-            const phElement = document.getElementById('ph-value');
-            const tdsElement = document.getElementById('tds-value');
-            const turbidityElement = document.getElementById('turbidity-value');
-            
-            if (!phElement || !tdsElement || !turbidityElement) return;
-            
-            const ph = parseFloat(phElement.textContent);
-            const tds = parseFloat(tdsElement.textContent);
-            const turbidity = parseFloat(turbidityElement.textContent);
+            const ph = parseFloat(document.getElementById('ph-value').textContent);
+            const tds = parseFloat(document.getElementById('tds-value').textContent);
+            const turbidity = parseFloat(document.getElementById('turbidity-value').textContent);
             
             let condition = "Baik";
             let indicatorClass = "good";
@@ -2429,18 +2393,13 @@
                 indicatorClass = "danger";
             }
             
-            const waterConditionElement = document.getElementById('water-condition');
-            if (waterConditionElement) {
-                waterConditionElement.textContent = condition;
-            }
-            
+            document.getElementById('water-condition').textContent = condition;
             const indicator = document.querySelector('.quality-indicator');
             if (indicator) {
                 indicator.className = `quality-indicator ${indicatorClass}`;
             }
         }
 
-        // Update control status indicator dari ESP32
         function updateControlStatusFromESP32(device, isOn) {
             let elementId = '';
             if (device === 'PompaIsi') elementId = 'pompa-isi-status-indicator';
@@ -2451,18 +2410,14 @@
                 if (isOn) {
                     updateModeIndicator(false);
                     currentMode = 'manual';
-                    if (espOnline) {
-                        enableManualControls();
-                    }
+                    if (espOnline) enableManualControls();
                 }
                 return;
             } else if (device === 'Otomatis') {
                 if (isOn) {
                     updateModeIndicator(true);
                     currentMode = 'auto';
-                    if (espOnline) {
-                        disableManualControls();
-                    }
+                    if (espOnline) disableManualControls();
                 }
                 return;
             }
@@ -2472,203 +2427,442 @@
                 if (element) {
                     element.className = `control-status ${isOn ? 'status-on' : 'status-off'}`;
                     element.style.background = isOn ? '#4caf50' : '#f44336';
-                    element.style.animation = isOn ? 'statusPulse 2s infinite' : 'none';
                 }
             }
         }
 
-        // Update mode indicator
         function updateModeIndicator(isAuto) {
             const modeIndicator = document.getElementById('mode-indicator');
-            const modeIndicatorDesktop = document.getElementById('mode-indicator-desktop');
             currentMode = isAuto ? 'auto' : 'manual';
             
             if (isAuto) {
-                if (modeIndicator) {
-                    modeIndicator.innerHTML = '<i class="bi bi-robot"></i> MODE OTOMATIS';
-                    modeIndicator.className = 'mode-indicator mode-auto';
-                }
-                if (modeIndicatorDesktop) {
-                    modeIndicatorDesktop.innerHTML = '<i class="bi bi-robot"></i> MODE OTOMATIS';
-                    modeIndicatorDesktop.className = 'mode-indicator mode-auto';
-                }
+                modeIndicator.innerHTML = '<i class="bi bi-robot"></i> MODE OTOMATIS';
+                modeIndicator.className = 'mode-indicator mode-auto';
             } else {
-                if (modeIndicator) {
-                    modeIndicator.innerHTML = '<i class="bi bi-hand-index"></i> MODE MANUAL';
-                    modeIndicator.className = 'mode-indicator mode-manual';
-                }
-                if (modeIndicatorDesktop) {
-                    modeIndicatorDesktop.innerHTML = '<i class="bi bi-hand-index"></i> MODE MANUAL';
-                    modeIndicatorDesktop.className = 'mode-indicator mode-manual';
-                }
+                modeIndicator.innerHTML = '<i class="bi bi-hand-index"></i> MODE MANUAL';
+                modeIndicator.className = 'mode-indicator mode-manual';
             }
         }
 
-        // Update slider labels
         function updateSliderLabels(percentage) {
-            // Reset all labels
             document.querySelectorAll('.slider-label').forEach(label => {
                 label.classList.remove('active');
             });
             
-            // Activate appropriate label
             if (percentage <= 33) {
-                const label = document.getElementById('label-sedikit');
-                if (label) label.classList.add('active');
+                document.getElementById('label-sedikit').classList.add('active');
             } else if (percentage <= 66) {
-                const label = document.getElementById('label-sedang');
-                if (label) label.classList.add('active');
+                document.getElementById('label-sedang').classList.add('active');
             } else {
-                const label = document.getElementById('label-banyak');
-                if (label) label.classList.add('active');
+                document.getElementById('label-banyak').classList.add('active');
             }
         }
 
-        // Show servo active indicator
+        // ============================================
+        // FUNGSI ANIMASI SERVO RESPONSIF (BARU)
+        // ============================================
+
         function showServoActiveIndicator(duration) {
             if (isServoActive) return;
             
             isServoActive = true;
-            feedingDuration = duration;
-            feedingStartTime = new Date();
+            servoTotalTime = duration;
+            servoRemainingTime = duration;
             
             const indicator = document.getElementById('servo-active-indicator');
             const feedCard = document.getElementById('feed-control-card');
+            const skipBtn = document.getElementById('skip-btn');
             
-            // Show indicator
-            if (indicator) {
-                indicator.style.display = 'block';
-            }
+            // Reset dan tampilkan indicator
+            indicator.style.display = 'block';
+            indicator.style.animation = 'servoAppear 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
+            
+            // Update status text
+            document.getElementById('servo-status-text').textContent = 'Servo pakan sedang aktif...';
+            
+            // Update feed card
             if (feedCard) {
                 feedCard.classList.add('feeding-active');
             }
             
-            // Update time display
-            const feedingTimeElement = document.getElementById('feeding-time');
-            if (feedingTimeElement) {
-                feedingTimeElement.textContent = `${duration.toFixed(1)}s`;
+            // Enable skip button
+            if (skipBtn) {
+                skipBtn.disabled = false;
+                skipBtn.innerHTML = '<i class="bi bi-skip-forward"></i> Lewati';
             }
             
-            // Start progress animation
+            // Reset progress circle
             const progressCircle = document.getElementById('servo-progress-circle');
-            const circumference = 314;
-            let progress = 0;
+            const circumference = 339; // 2 * π * 54
+            progressCircle.style.strokeDasharray = circumference;
+            progressCircle.style.strokeDashoffset = circumference;
             
-            // Generate particles
-            generateFeedingParticles();
+            // Start animations
+            startServoProgress();
+            generateServoParticles();
             
-            // Start progress update
-            if (feedingInterval) clearInterval(feedingInterval);
-            
-            feedingInterval = setInterval(() => {
-                const now = new Date();
-                const elapsed = (now - feedingStartTime) / 1000;
-                const remaining = Math.max(0, feedingDuration - elapsed);
-                progress = Math.min(100, (elapsed / feedingDuration) * 100);
-                
-                // Update progress ring
-                if (progressCircle) {
-                    const offset = circumference - (progress / 100) * circumference;
-                    progressCircle.style.strokeDashoffset = offset;
-                }
-                
-                // Update time display
-                if (feedingTimeElement) {
-                    feedingTimeElement.textContent = `${remaining.toFixed(1)}s`;
-                }
-                
-                // Check if finished
-                if (remaining <= 0) {
-                    hideServoActiveIndicator();
-                }
-            }, 50);
+            // Update feeding history
+            updateFeedingHistory('active', duration, currentFeedAmount, currentMode);
             
             // Auto hide after duration
             setTimeout(() => {
-                hideServoActiveIndicator();
-            }, feedingDuration * 1000 + 500);
+                if (isServoActive) {
+                    hideServoActiveIndicator(true);
+                }
+            }, duration * 1000 + 500);
         }
 
-        // Generate feeding particles
-        function generateFeedingParticles() {
-            const container = document.getElementById('feeding-particles');
-            if (!container) return;
+        function generateServoParticles() {
+            if (servoParticlesInterval) clearInterval(servoParticlesInterval);
             
-            container.innerHTML = '';
+            const particlesContainer = document.getElementById('servo-particles');
+            if (!particlesContainer) return;
             
-            for (let i = 0; i < 20; i++) {
+            // Clear existing particles
+            particlesContainer.innerHTML = '';
+            
+            // Generate particles based on screen size
+            const particleCount = window.innerWidth < 768 ? 8 : 15;
+            
+            servoParticlesInterval = setInterval(() => {
+                if (!isServoActive) {
+                    clearInterval(servoParticlesInterval);
+                    return;
+                }
+                
+                createServoParticle(particlesContainer, particleCount);
+            }, 300);
+        }
+
+        function createServoParticle(container, maxParticles) {
+            const particleCount = Math.min(maxParticles, container.children.length < maxParticles ? 
+                Math.floor(Math.random() * 3) + 1 : 0);
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random size based on device
+                const size = window.innerWidth < 768 ? 
+                    Math.random() * 8 + 4 : 
+                    Math.random() * 14 + 6;
+                
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                // Random animation properties
+                const tx = (Math.random() - 0.5) * 100;
+                const ty = -Math.random() * 80 - 20;
+                const r = (Math.random() - 0.5) * 180;
+                
+                // Set styles
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.opacity = '0';
+                
+                // Set CSS custom properties for animation
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                particle.style.setProperty('--r', `${r}deg`);
+                
+                // Animation
+                particle.style.animation = `particleFloat 1.5s ease-out forwards`;
+                
+                container.appendChild(particle);
+                
+                // Remove particle after animation
                 setTimeout(() => {
-                    const particle = document.createElement('div');
-                    particle.className = 'feeding-particle';
-                    particle.style.left = `${Math.random() * 100}%`;
-                    particle.style.top = `${Math.random() * 100}%`;
-                    particle.style.setProperty('--tx', `${(Math.random() - 0.5) * 100}px`);
-                    particle.style.animationDelay = `${Math.random() * 0.5}s`;
-                    container.appendChild(particle);
-                    
-                    // Remove particle after animation
-                    setTimeout(() => {
-                        if (particle.parentNode === container) {
-                            particle.remove();
-                        }
-                    }, 3000);
-                }, i * 150);
+                    if (particle.parentNode === container) {
+                        particle.remove();
+                    }
+                }, 1500);
             }
         }
 
-        // Hide servo active indicator
-        function hideServoActiveIndicator() {
+        function startServoProgress() {
+            if (servoProgressInterval) clearInterval(servoProgressInterval);
+            
+            const progressCircle = document.getElementById('servo-progress-circle');
+            const circumference = 339;
+            
+            servoProgressInterval = setInterval(() => {
+                if (!isServoActive || servoRemainingTime <= 0) {
+                    clearInterval(servoProgressInterval);
+                    return;
+                }
+                
+                // Update time
+                servoRemainingTime = Math.max(0, servoRemainingTime - 0.1);
+                const progressPercent = 100 - (servoRemainingTime / servoTotalTime) * 100;
+                
+                // Update progress circle
+                const offset = circumference - (progressPercent / 100) * circumference;
+                progressCircle.style.strokeDashoffset = offset;
+                
+                // Update time display
+                document.getElementById('feeding-time').textContent = servoRemainingTime.toFixed(1);
+                
+                // Change color based on progress
+                if (progressPercent > 66) {
+                    progressCircle.style.stroke = '#4CAF50'; // Green for completion
+                } else if (progressPercent > 33) {
+                    progressCircle.style.stroke = '#FF9800'; // Orange for middle
+                }
+                
+                // Update status text based on progress
+                const statusText = document.getElementById('servo-status-text');
+                if (servoRemainingTime <= 0.5) {
+                    statusText.textContent = 'Menyelesaikan pemberian pakan...';
+                } else if (servoRemainingTime <= servoTotalTime * 0.5) {
+                    statusText.textContent = 'Pemberian pakan setengah jalan...';
+                }
+                
+            }, 100);
+        }
+
+        function hideServoActiveIndicator(success = true) {
             if (!isServoActive) return;
             
             isServoActive = false;
             const indicator = document.getElementById('servo-active-indicator');
             const feedCard = document.getElementById('feed-control-card');
             
-            if (indicator) {
-                // Add disappear animation
-                indicator.style.animation = 'servoIndicatorDisappear 0.5s ease-out forwards';
-                
-                setTimeout(() => {
-                    indicator.style.display = 'none';
-                    indicator.style.animation = 'servoIndicatorAppear 0.5s ease-out forwards';
-                }, 500);
+            // Stop animations
+            if (servoParticlesInterval) {
+                clearInterval(servoParticlesInterval);
+                servoParticlesInterval = null;
             }
             
+            if (servoProgressInterval) {
+                clearInterval(servoProgressInterval);
+                servoProgressInterval = null;
+            }
+            
+            // Clear particles
+            const particlesContainer = document.getElementById('servo-particles');
+            if (particlesContainer) {
+                particlesContainer.innerHTML = '';
+            }
+            
+            // Animate out
+            if (indicator) {
+                indicator.style.animation = 'servoDisappear 0.3s ease-out forwards';
+                setTimeout(() => {
+                    indicator.style.display = 'none';
+                }, 300);
+            }
+            
+            // Remove feed card animation
             if (feedCard) {
                 feedCard.classList.remove('feeding-active');
             }
             
-            if (feedingInterval) {
-                clearInterval(feedingInterval);
-                feedingInterval = null;
-            }
-        }
-
-        // Show feeding animation in feed container
-        function showFeedAnimation() {
-            const animationContainer = document.getElementById('feed-animation');
-            if (!animationContainer) return;
+            // Update feeding history
+            const status = success ? 'completed' : 'skipped';
+            updateFeedingHistory(status, servoTotalTime, currentFeedAmount, currentMode);
             
-            animationContainer.innerHTML = '';
-            
-            for (let i = 0; i < 10; i++) {
+            // Show notification if success
+            if (success) {
                 setTimeout(() => {
-                    const particle = document.createElement('div');
-                    particle.className = 'feed-particle';
-                    particle.style.left = `${Math.random() * 100}%`;
-                    particle.style.top = `${Math.random() * 50}%`;
-                    animationContainer.appendChild(particle);
-                    
-                    setTimeout(() => {
-                        if (particle.parentNode === animationContainer) {
-                            particle.remove();
-                        }
-                    }, 1000);
-                }, i * 100);
+                    showNotification('Pemberian pakan selesai!', 'success');
+                }, 500);
             }
         }
 
-        // Check feed level and show alert if low
+        function skipFeeding() {
+            if (!isServoActive) return;
+            
+            const skipBtn = document.getElementById('skip-btn');
+            if (skipBtn) {
+                skipBtn.disabled = true;
+                skipBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Lewati...';
+            }
+            
+            // Send stop command to ESP32
+            if (espOnline) {
+                client.publish('akuaponik/kendali/servo', '0');
+            }
+            
+            // Hide immediately
+            hideServoActiveIndicator(false);
+            
+            showNotification('Pemberian pakan dihentikan', 'warning');
+        }
+
+        // ============================================
+        // FUNGSI RIWAYAT PAKAN
+        // ============================================
+
+        function updateFeedingHistory(status, duration, amount, mode) {
+            const now = new Date();
+            const feedCode = getFeedCodeFromPercentage(amount);
+            
+            // Update history object
+            lastFeedingHistory = {
+                timestamp: now.getTime(),
+                duration: duration,
+                amount: amount,
+                status: status,
+                mode: mode,
+                feedCode: feedCode,
+                formattedTime: now.toLocaleTimeString('id-ID', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                }),
+                formattedDate: now.toLocaleDateString('id-ID', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                })
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('lastFeedingHistory', JSON.stringify(lastFeedingHistory));
+            
+            // Update display
+            updateFeedingHistoryDisplay();
+            
+            // Log untuk debugging
+            console.log('Riwayat pakan diperbarui:', lastFeedingHistory);
+        }
+
+        function updateFeedingHistoryDisplay() {
+            const emptyElement = document.getElementById('feed-history-empty');
+            const detailsElement = document.getElementById('feed-history-details');
+            
+            if (!lastFeedingHistory.timestamp) {
+                // No history yet
+                if (emptyElement) emptyElement.style.display = 'block';
+                if (detailsElement) detailsElement.style.display = 'none';
+                return;
+            }
+            
+            // Show details and hide empty message
+            if (emptyElement) emptyElement.style.display = 'none';
+            if (detailsElement) detailsElement.style.display = 'block';
+            
+            // Update status
+            const statusElement = document.getElementById('last-feed-status');
+            if (statusElement) {
+                let statusText = 'Tidak diketahui';
+                let statusClass = '';
+                
+                switch(lastFeedingHistory.status) {
+                    case 'active':
+                        statusText = 'Sedang Berjalan';
+                        statusClass = 'warning';
+                        break;
+                    case 'completed':
+                        statusText = 'Selesai';
+                        statusClass = 'success';
+                        break;
+                    case 'skipped':
+                        statusText = 'Dibatalkan';
+                        statusClass = 'warning';
+                        break;
+                    case 'error':
+                        statusText = 'Error';
+                        statusClass = 'warning';
+                        break;
+                    case 'idle':
+                        statusText = 'Tidak Aktif';
+                        statusClass = '';
+                        break;
+                }
+                
+                statusElement.textContent = statusText;
+                statusElement.className = `feed-history-value ${statusClass}`;
+            }
+            
+            // Update time
+            const timeElement = document.getElementById('last-feed-time');
+            if (timeElement && lastFeedingHistory.formattedTime) {
+                timeElement.textContent = `${lastFeedingHistory.formattedTime}`;
+            }
+            
+            // Update duration
+            const durationElement = document.getElementById('last-feed-duration');
+            if (durationElement) {
+                durationElement.textContent = `${lastFeedingHistory.duration.toFixed(1)} detik`;
+            }
+            
+            // Update amount
+            const amountElement = document.getElementById('last-feed-amount');
+            if (amountElement) {
+                let amountText = 'Sedang';
+                if (lastFeedingHistory.feedCode === '1') amountText = 'Sedikit';
+                else if (lastFeedingHistory.feedCode === '3') amountText = 'Banyak';
+                amountElement.textContent = `${amountText} (${lastFeedingHistory.amount}%)`;
+            }
+            
+            // Update mode
+            const modeElement = document.getElementById('last-feed-mode');
+            if (modeElement) {
+                modeElement.textContent = lastFeedingHistory.mode === 'auto' ? 'Otomatis' : 'Manual';
+            }
+            
+            // Update timestamp
+            const timestampElement = document.getElementById('last-feed-timestamp');
+            if (timestampElement && lastFeedingHistory.formattedDate) {
+                const now = new Date();
+                const diffMs = now.getTime() - lastFeedingHistory.timestamp;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+                
+                let timeAgo = '';
+                if (diffDays > 0) {
+                    timeAgo = `${diffDays} hari yang lalu`;
+                } else if (diffHours > 0) {
+                    timeAgo = `${diffHours} jam yang lalu`;
+                } else if (diffMins > 0) {
+                    timeAgo = `${diffMins} menit yang lalu`;
+                } else {
+                    timeAgo = 'Baru saja';
+                }
+                
+                timestampElement.textContent = `Terakhir diperbarui: ${lastFeedingHistory.formattedDate} ${lastFeedingHistory.formattedTime} (${timeAgo})`;
+            }
+            
+            // Update card animation based on status
+            const historyCard = document.getElementById('feed-history-card');
+            if (historyCard) {
+                // Remove previous animation classes
+                historyCard.classList.remove('feeding-active');
+                
+                // Add animation if active
+                if (lastFeedingHistory.status === 'active') {
+                    historyCard.classList.add('feeding-active');
+                }
+            }
+        }
+
+        function clearFeedHistory() {
+            if (confirm('Apakah Anda yakin ingin menghapus riwayat pakan?')) {
+                lastFeedingHistory = {
+                    timestamp: null,
+                    duration: 0,
+                    amount: 0,
+                    status: 'idle',
+                    mode: 'manual',
+                    feedCode: '2'
+                };
+                
+                localStorage.removeItem('lastFeedingHistory');
+                updateFeedingHistoryDisplay();
+                
+                showNotification('Riwayat pakan telah dihapus', 'info');
+            }
+        }
+
+        // ============================================
+        // FUNGSI MONITORING LANJUTAN
+        // ============================================
+
         function checkFeedLevel(level, max = 29) {
             const percent = (level / max) * 100;
             const alertElement = document.getElementById('feed-alert');
@@ -2683,7 +2877,6 @@
             }
         }
 
-        // Show notification
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
             notification.className = `alert alert-${type} alert-dismissible fade show shadow-lg mb-2`;
@@ -2696,7 +2889,6 @@
             if (container) {
                 container.appendChild(notification);
                 
-                // Hapus setelah 5 detik
                 setTimeout(() => {
                     if (notification.parentNode === container) {
                         notification.remove();
@@ -2705,14 +2897,12 @@
             }
         }
 
-        // Feed duration mapping ke kode
         function getFeedCodeFromPercentage(percentage) {
-            if (percentage <= 33) return "1";      // Pendek (0.5s)
-            if (percentage <= 66) return "2";      // Sedang (1.5s)
-            return "3";                            // Panjang (3.0s)
+            if (percentage <= 33) return "1";
+            if (percentage <= 66) return "2";
+            return "3";
         }
 
-        // Feed now function
         function feedNow() {
             if (!espOnline) {
                 showNotification('ESP32 offline - Tidak dapat memberi pakan', 'danger');
@@ -2729,7 +2919,6 @@
                 return;
             }
             
-            // DEBOUNCE: Cegah klik terlalu cepat
             const now = Date.now();
             if (lastControlTime['servo'] && now - lastControlTime['servo'] < 1000) {
                 showNotification('Tunggu sebentar sebelum memberi pakan lagi', 'warning');
@@ -2739,26 +2928,26 @@
             
             const feedCode = getFeedCodeFromPercentage(currentFeedAmount);
             
-            // Disable tombol sementara
+            // Duration mapping
+            const durationMap = {
+                '1': 0.5,  // Sedikit
+                '2': 1.5,  // Sedang
+                '3': 3.0   // Banyak
+            };
+            
             const feedBtn = document.getElementById('feed-now-btn');
             if (feedBtn) {
                 feedBtn.disabled = true;
                 feedBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Memproses...';
             }
             
-            // Tampilkan loading
             showControlLoading('servo', true);
             
-            // Kirim perintah
             client.publish('akuaponik/kendali/servo', '1');
             client.publish('akuaponik/pakan/durasi', feedCode);
             
-            // Tampilkan animasi
-            showFeedAnimation();
-            
             showNotification(`Mengirim perintah pakan (kode: ${feedCode})`, 'info');
             
-            // Auto enable tombol setelah 2 detik
             setTimeout(() => {
                 if (feedBtn) {
                     feedBtn.disabled = false;
@@ -2768,7 +2957,6 @@
             }, 2000);
         }
 
-        // Update water visual
         function updateWaterVisual(current, max) {
             const percent = (current / max) * 100;
             const waterLevel = document.getElementById('water-level-visual');
@@ -2776,32 +2964,18 @@
                 waterLevel.style.height = `${Math.min(percent, 100)}%`;
             }
             
-            const waterLevelText = document.getElementById('water-level');
-            if (waterLevelText) {
-                waterLevelText.textContent = current.toFixed(1);
-            }
+            document.getElementById('water-level').textContent = current.toFixed(1);
             
             // Update progress bars for sensors
-            const phElement = document.getElementById('ph-value');
-            const tdsElement = document.getElementById('tds-value');
-            const turbidityElement = document.getElementById('turbidity-value');
+            const phValue = parseFloat(document.getElementById('ph-value').textContent);
+            const tdsValue = parseFloat(document.getElementById('tds-value').textContent);
+            const turbidityValue = parseFloat(document.getElementById('turbidity-value').textContent);
             
-            if (phElement && tdsElement && turbidityElement) {
-                const phValue = parseFloat(phElement.textContent);
-                const tdsValue = parseFloat(tdsElement.textContent);
-                const turbidityValue = parseFloat(turbidityElement.textContent);
-                
-                const phProgress = document.getElementById('ph-progress');
-                const tdsProgress = document.getElementById('tds-progress');
-                const turbidityProgress = document.getElementById('turbidity-progress');
-                
-                if (phProgress) phProgress.style.width = `${(phValue / 14) * 100}%`;
-                if (tdsProgress) tdsProgress.style.width = `${Math.min(100, (tdsValue / 5000) * 100)}%`;
-                if (turbidityProgress) turbidityProgress.style.width = `${Math.min(100, (turbidityValue / 1000) * 100)}%`;
-            }
+            document.getElementById('ph-progress').style.width = `${(phValue / 14) * 100}%`;
+            document.getElementById('tds-progress').style.width = `${Math.min(100, (tdsValue / 5000) * 100)}%`;
+            document.getElementById('turbidity-progress').style.width = `${Math.min(100, (turbidityValue / 1000) * 100)}%`;
         }
 
-        // Update feed visual
         function updateFeedVisual(current, max) {
             const percent = (current / max) * 100;
             const feedLevel = document.getElementById('feed-level-visual');
@@ -2809,26 +2983,13 @@
                 feedLevel.style.height = `${Math.min(percent, 100)}%`;
             }
             
-            const feedLevelText = document.getElementById('feed-level');
-            if (feedLevelText) {
-                feedLevelText.textContent = current.toFixed(1);
-            }
+            document.getElementById('feed-level').textContent = current.toFixed(1);
+            document.getElementById('feed-percentage').textContent = `${Math.round(percent)}%`;
+            document.getElementById('feed-progress-bar').style.width = `${percent}%`;
             
-            const feedPercentage = document.getElementById('feed-percentage');
-            if (feedPercentage) {
-                feedPercentage.textContent = `${Math.round(percent)}%`;
-            }
-            
-            const feedProgressBar = document.getElementById('feed-progress-bar');
-            if (feedProgressBar) {
-                feedProgressBar.style.width = `${percent}%`;
-            }
-            
-            // Check if feed is low
             checkFeedLevel(current, max);
         }
 
-        // Fungsi untuk disable/enable tombol kontrol
         function disableControlButtons(device, disable) {
             const onBtn = document.getElementById(`btn-${device}-on`);
             const offBtn = document.getElementById(`btn-${device}-off`);
@@ -2840,17 +3001,8 @@
                 const feedBtn = document.getElementById('feed-now-btn');
                 if (feedBtn) feedBtn.disabled = disable;
             }
-            
-            if (disable) {
-                if (onBtn) onBtn.style.opacity = '0.6';
-                if (offBtn) offBtn.style.opacity = '0.6';
-            } else {
-                if (onBtn) onBtn.style.opacity = '1';
-                if (offBtn) offBtn.style.opacity = '1';
-            }
         }
 
-        // Fungsi untuk menampilkan loading state
         function showControlLoading(device, show) {
             const indicator = document.getElementById(`${device}-status-indicator`);
             if (!indicator) return;
@@ -2860,10 +3012,8 @@
                 indicator.style.background = '#ff9800';
                 indicator.style.animation = 'pulse 1s infinite';
             }
-            // Status akhir akan diupdate oleh MQTT handler dari ESP32
         }
 
-        // Control functions
         function setMode(mode) {
             if (!espOnline) {
                 showNotification('ESP32 offline - Tidak dapat mengubah mode', 'danger');
@@ -2907,7 +3057,6 @@
                 return;
             }
             
-            // DEBOUNCE: Cegah klik terlalu cepat
             const now = Date.now();
             if (lastControlTime[device] && now - lastControlTime[device] < 1000) {
                 showNotification(`Tunggu sebentar sebelum mengontrol ${device} lagi`, 'warning');
@@ -2915,7 +3064,6 @@
             }
             lastControlTime[device] = now;
             
-            // Disable tombol sementara
             disableControlButtons(device, true);
             
             const value = state === 'on' ? '1' : '0';
@@ -2931,10 +3079,8 @@
                 topic = 'akuaponik/kendali/servo';
             }
             
-            // TAMPILKAN LOADING STATE
             showControlLoading(device, true);
             
-            // Kirim perintah
             client.publish(topic, value);
             
             const deviceNames = {
@@ -2946,7 +3092,6 @@
             
             showNotification(`Mengirim perintah: ${deviceNames[device]} ${state === 'on' ? 'ON' : 'OFF'}`, 'info');
             
-            // Auto enable tombol setelah 2 detik
             setTimeout(() => {
                 disableControlButtons(device, false);
                 showControlLoading(device, false);
@@ -2957,7 +3102,6 @@
         // FUNGSI KALIBRASI
         // ============================================
 
-        // Fungsi untuk set offset kalibrasi
         function setOffsetCalibration(type, buttonElement) {
             if (!espOnline) {
                 showNotification('ESP32 offline - Tidak dapat mengkalibrasi', 'danger');
@@ -2968,7 +3112,6 @@
             const input = document.getElementById(inputId);
             const offsetValue = input.value.trim();
             
-            // Validasi input
             if (!offsetValue) {
                 showNotification('Masukkan nilai offset terlebih dahulu', 'warning');
                 return;
@@ -2980,15 +3123,12 @@
                 return;
             }
             
-            // Simpan button state asli
             const originalText = buttonElement.innerHTML;
             const originalClass = buttonElement.className;
             
-            // Tampilkan loading
             buttonElement.disabled = true;
             buttonElement.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Memproses...';
             
-            // Kirim MQTT
             setTimeout(() => {
                 try {
                     const topic = offsetTopics[type];
@@ -2997,7 +3137,6 @@
                     }
                     
                     client.publish(topic, offset.toString());
-                    console.log(`Mengirim offset ${type}: ${offset} ke ${topic}`);
                     
                     lastCalibrationData[type] = {
                         sensor: sensorInfo[type].name,
@@ -3041,7 +3180,6 @@
             }, 1000);
         }
 
-        // Fungsi auto kalibrasi
         function autoCalibrate(type) {
             if (!espOnline) {
                 showNotification('ESP32 offline - Tidak dapat mengkalibrasi', 'danger');
@@ -3075,7 +3213,6 @@
             );
         }
 
-        // Update tampilan riwayat kalibrasi
         function updateCalibrationHistoryDisplay() {
             const historyList = document.getElementById('history-list');
             const emptyHistory = document.getElementById('empty-history');
@@ -3118,7 +3255,6 @@
             });
         }
 
-        // Reset semua kalibrasi
         function resetCalibration() {
             if (!espOnline) {
                 showNotification('ESP32 offline - Tidak dapat mereset kalibrasi', 'danger');
@@ -3171,20 +3307,15 @@
         let currentAction = null;
 
         function showConfirmModal(title, message, action) {
-            const confirmTitle = document.getElementById('confirm-title');
-            const confirmMessage = document.getElementById('confirm-message');
-            const confirmModal = document.getElementById('confirm-modal');
-            
-            if (confirmTitle) confirmTitle.textContent = title;
-            if (confirmMessage) confirmMessage.textContent = message;
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-message').textContent = message;
             currentAction = action;
             
-            if (confirmModal) confirmModal.style.display = 'flex';
+            document.getElementById('confirm-modal').style.display = 'flex';
         }
 
         function hideConfirmModal() {
-            const confirmModal = document.getElementById('confirm-modal');
-            if (confirmModal) confirmModal.style.display = 'none';
+            document.getElementById('confirm-modal').style.display = 'none';
             currentAction = null;
         }
 
@@ -3195,7 +3326,6 @@
             hideConfirmModal();
         }
 
-        // Konfirmasi simpan pengaturan
         function confirmSaveSettings() {
             if (!espOnline) {
                 showNotification('ESP32 offline - Tidak dapat menyimpan pengaturan', 'danger');
@@ -3209,7 +3339,6 @@
             );
         }
 
-        // Konfirmasi reset kalibrasi
         function confirmResetCalibration() {
             if (!espOnline) {
                 showNotification('ESP32 offline - Tidak dapat mereset kalibrasi', 'danger');
@@ -3218,29 +3347,18 @@
             
             showConfirmModal(
                 'Reset Kalibrasi',
-                'PERINGATAN: Semua offset kalibrasi akan dikembalikan ke nilai default (0). Tindakan ini tidak dapat dibatalkan.',
+                'PERINGATAN: Semua offset kalibrasi akan dikembalikan ke nilai default (0).',
                 resetCalibration
             );
         }
 
-        // Simpan pengaturan sistem
         function saveSettings() {
             try {
-                const intervalInput = document.getElementById('data-interval');
-                const warningWaterLowInput = document.getElementById('warning-water-low');
-                const warningWaterHighInput = document.getElementById('warning-water-high');
-                const warningFeedInput = document.getElementById('warning-feed');
-                
-                if (!intervalInput || !warningWaterLowInput || !warningWaterHighInput || !warningFeedInput) {
-                    showNotification('Elemen pengaturan tidak ditemukan', 'danger');
-                    return;
-                }
-                
                 const settings = {
-                    interval: intervalInput.value,
-                    warningWaterLow: warningWaterLowInput.value,
-                    warningWaterHigh: warningWaterHighInput.value,
-                    warningFeed: warningFeedInput.value
+                    interval: document.getElementById('data-interval').value,
+                    warningWaterLow: document.getElementById('warning-water-low').value,
+                    warningWaterHigh: document.getElementById('warning-water-high').value,
+                    warningFeed: document.getElementById('warning-feed').value
                 };
                 
                 if (parseFloat(settings.warningWaterLow) >= parseFloat(settings.warningWaterHigh)) {
@@ -3265,27 +3383,18 @@
         // INISIALISASI
         // ============================================
 
-        // Event listeners untuk modal
         document.addEventListener('DOMContentLoaded', function() {
-            const confirmActionBtn = document.getElementById('confirm-action-btn');
-            const cancelBtn = document.getElementById('cancel-btn');
-            const confirmModal = document.getElementById('confirm-modal');
+            // Event listeners untuk modal
+            document.getElementById('confirm-action-btn').addEventListener('click', confirmAction);
+            document.getElementById('cancel-btn').addEventListener('click', hideConfirmModal);
             
-            if (confirmActionBtn) {
-                confirmActionBtn.addEventListener('click', confirmAction);
-            }
-            if (cancelBtn) {
-                cancelBtn.addEventListener('click', hideConfirmModal);
-            }
-            if (confirmModal) {
-                confirmModal.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        hideConfirmModal();
-                    }
-                });
-            }
-            
-            // Inisialisasi fungsi lainnya
+            document.getElementById('confirm-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideConfirmModal();
+                }
+            });
+
+            // Inisialisasi
             updateTime();
             setInterval(updateTime, 1000);
             
@@ -3304,18 +3413,12 @@
             updateCalibrationHistoryDisplay();
             generateWaterAnimations();
             
-            // Set initial values for monitoring
-            const phValue = document.getElementById('ph-value');
-            const tdsValue = document.getElementById('tds-value');
-            const turbidityValue = document.getElementById('turbidity-value');
-            const waterLevel = document.getElementById('water-level');
-            const feedLevel = document.getElementById('feed-level');
-            
-            if (phValue) phValue.textContent = '7.2';
-            if (tdsValue) tdsValue.textContent = '850';
-            if (turbidityValue) turbidityValue.textContent = '12';
-            if (waterLevel) waterLevel.textContent = '35.0';
-            if (feedLevel) feedLevel.textContent = '22.0';
+            // Set initial values
+            document.getElementById('ph-value').textContent = '7.2';
+            document.getElementById('tds-value').textContent = '850';
+            document.getElementById('turbidity-value').textContent = '12';
+            document.getElementById('water-level').textContent = '35.0';
+            document.getElementById('feed-level').textContent = '22.0';
             
             // Initialize visualizations
             updateWaterVisual(35, 63);
@@ -3323,11 +3426,8 @@
             updateWaterCondition();
             
             // Set slider to initial value
-            const slider = document.getElementById('feed-amount-slider');
-            if (slider) {
-                slider.value = currentFeedAmount;
-                updateSliderLabels(currentFeedAmount);
-            }
+            document.getElementById('feed-amount-slider').value = currentFeedAmount;
+            updateSliderLabels(currentFeedAmount);
             
             // Set initial control status
             updateControlStatusFromESP32('PompaIsi', false);
@@ -3337,29 +3437,46 @@
             
             // Set initial mode
             updateModeIndicator(true);
-            updateESPStatus(false); // Mulai dengan status offline
+            updateESPStatus(false);
+            
+            // Load and display feeding history
+            updateFeedingHistoryDisplay();
             
             // Start heartbeat checker
             startHeartbeatChecker();
+            
+            // Setup event listener untuk skip button
+            const skipBtn = document.getElementById('skip-btn');
+            if (skipBtn) {
+                skipBtn.addEventListener('click', skipFeeding);
+            }
+            
+            // Setup event listener untuk touch di mobile
+            const servoIndicator = document.getElementById('servo-active-indicator');
+            if (servoIndicator) {
+                servoIndicator.addEventListener('touchmove', function(e) {
+                    if (isServoActive) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+                
+                // Prevent accidental clicks on background
+                servoIndicator.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
         });
 
         // ============================================
         // MQTT HANDLING
         // ============================================
 
-        // MQTT Connection handler
         client.on('connect', () => {
             console.log('Dashboard terhubung ke broker MQTT');
             
-            // Update status
             const statusDetail = document.getElementById('esp-status-detail');
-            const statusDetailDesktop = document.getElementById('esp-status-detail-desktop');
-            
             if (statusDetail) {
                 statusDetail.textContent = 'Terhubung ke server, menunggu ESP32...';
-            }
-            if (statusDetailDesktop) {
-                statusDetailDesktop.textContent = 'Terhubung ke server, menunggu ESP32...';
             }
             
             const topics = [
@@ -3374,8 +3491,7 @@
                 'akuaponik/Status/PompaBuang',
                 'akuaponik/Status/Irigasi',
                 'akuaponik/Status/Servo',
-                'akuaponik/heartbeat',
-                'akuaponik/pengaturan/+'
+                'akuaponik/heartbeat'
             ];
             
             topics.forEach(topic => {
@@ -3387,7 +3503,6 @@
             });
         });
 
-        // MQTT Message handler
         client.on('message', (topic, message) => {
             const payload = message.toString();
             
@@ -3397,7 +3512,7 @@
                 
                 const oldValue = parseFloat(element.textContent);
                 const duration = 500;
-                const steps = 30;
+                const steps = 20;
                 const stepValue = (newValue - oldValue) / steps;
                 let currentStep = 0;
                 
@@ -3418,42 +3533,36 @@
                     const value = parseFloat(payload);
                     currentSensorValues.ph = value;
                     animateValueChange('ph-value', value);
-                    const readValuePh = document.getElementById('read-value-ph');
-                    if (readValuePh) readValuePh.textContent = `${value.toFixed(2)} pH`;
+                    document.getElementById('read-value-ph').textContent = `${value.toFixed(2)} pH`;
                     updateWaterCondition();
                 } else if (topic === 'akuaponik/monitoring/TDS') {
                     const value = parseFloat(payload);
                     currentSensorValues.tds = value;
                     animateValueChange('tds-value', value);
-                    const readValueTds = document.getElementById('read-value-tds');
-                    if (readValueTds) readValueTds.textContent = `${value} ppm`;
+                    document.getElementById('read-value-tds').textContent = `${value} ppm`;
                     updateWaterCondition();
                 } else if (topic === 'akuaponik/monitoring/Turbidity') {
                     const value = parseFloat(payload);
                     currentSensorValues.turbidity = value;
                     animateValueChange('turbidity-value', value);
-                    const readValueTurbidity = document.getElementById('read-value-turbidity');
-                    if (readValueTurbidity) readValueTurbidity.textContent = `${value.toFixed(1)} NTU`;
+                    document.getElementById('read-value-turbidity').textContent = `${value.toFixed(1)} NTU`;
                     updateWaterCondition();
                 } else if (topic === 'akuaponik/monitoring/Air') {
                     const value = parseFloat(payload);
                     currentSensorValues.air = value;
                     updateWaterVisual(value, 63);
-                    const readValueAir = document.getElementById('read-value-air');
-                    if (readValueAir) readValueAir.textContent = `${value.toFixed(1)} cm`;
+                    document.getElementById('read-value-air').textContent = `${value.toFixed(1)} cm`;
                 } else if (topic === 'akuaponik/monitoring/Pakan') {
                     const value = parseFloat(payload);
                     currentSensorValues.feed = value;
                     updateFeedVisual(value, 29);
-                    const readValueFeed = document.getElementById('read-value-feed');
-                    if (readValueFeed) readValueFeed.textContent = `${value.toFixed(1)} cm`;
+                    document.getElementById('read-value-feed').textContent = `${value.toFixed(1)} cm`;
                 } else if (topic.includes('Status/')) {
                     const device = topic.split('/').pop();
                     const isOn = payload === '1';
                     
                     updateControlStatusFromESP32(device, isOn);
                     
-                    // Matikan loading state jika ada
                     let deviceId = '';
                     if (device === 'PompaIsi') deviceId = 'pompa-isi';
                     else if (device === 'PompaBuang') deviceId = 'pompa-buang';
@@ -3465,12 +3574,28 @@
                         disableControlButtons(deviceId, false);
                     }
                     
-                    // Handle servo aktif indicator
+                    // UPDATE BAGIAN INI UNTUK SERVO:
                     if (device === 'Servo' && isOn) {
-                        const duration = currentFeedAmount <= 33 ? 0.5 : currentFeedAmount <= 66 ? 1.5 : 3.0;
-                        showServoActiveIndicator(duration);
+                        // Dapatkan durasi dari feed code
+                        const durationMap = {
+                            '1': 0.5,  // Sedikit
+                            '2': 1.5,  // Sedang  
+                            '3': 3.0   // Banyak
+                        };
+                        
+                        const feedCode = getFeedCodeFromPercentage(currentFeedAmount);
+                        const duration = durationMap[feedCode] || 1.5;
+                        
+                        // Tampilkan indicator setelah delay kecil
+                        setTimeout(() => {
+                            showServoActiveIndicator(duration);
+                        }, 100);
+                        
                     } else if (device === 'Servo' && !isOn) {
-                        hideServoActiveIndicator();
+                        // Servo dimatikan
+                        setTimeout(() => {
+                            hideServoActiveIndicator(true);
+                        }, 100);
                     }
                 } else if (topic === 'akuaponik/heartbeat') {
                     const status = payload.toString();
@@ -3479,7 +3604,6 @@
                             updateESPStatus(true);
                             showNotification('Sistem online - Kontrol diaktifkan', 'success');
                         }
-                        // Perbarui waktu heartbeat terakhir
                         lastHeartbeatTime = Date.now();
                     } else if (status === 'OFF') {
                         if (espOnline) {
@@ -3493,35 +3617,50 @@
             }
         });
 
-        // Handle MQTT errors
         client.on('error', (error) => {
             console.error('MQTT Error:', error);
-            
-            // Update status karena MQTT error
             updateESPStatus(false);
         });
 
-        // Handle MQTT disconnect
         client.on('disconnect', () => {
             console.log('Dashboard terputus dari broker MQTT');
-            
-            // Update status karena MQTT disconnect
             updateESPStatus(false);
         });
 
-        // Slider event handler
-        document.addEventListener('DOMContentLoaded', function() {
-            const slider = document.getElementById('feed-amount-slider');
-            if (slider) {
-                slider.addEventListener('input', function() {
-                    currentFeedAmount = this.value;
-                    updateSliderLabels(currentFeedAmount);
-                    
-                    if (espOnline) {
-                        const feedCode = getFeedCodeFromPercentage(currentFeedAmount);
-                        client.publish('akuaponik/pakan/durasi', feedCode);
+        document.getElementById('feed-amount-slider').addEventListener('input', function() {
+            currentFeedAmount = this.value;
+            updateSliderLabels(currentFeedAmount);
+            
+            if (espOnline) {
+                const feedCode = getFeedCodeFromPercentage(currentFeedAmount);
+                client.publish('akuaponik/pakan/durasi', feedCode);
+            }
+        });
+
+        // Handle window resize untuk update animasi
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                if (isServoActive) {
+                    const servoGear = document.querySelector('.servo-gear');
+                    if (servoGear) {
+                        if (window.innerWidth >= 768) {
+                            // Switch ke animasi desktop (rotate)
+                            servoGear.style.animation = 'gearRotate 3s linear infinite';
+                        } else {
+                            // Switch ke animasi mobile (pulse)
+                            servoGear.style.animation = 'gearPulse 2s infinite';
+                        }
                     }
-                });
+                }
+            }, 250);
+        });
+
+        // Handle ESC key untuk skip feeding
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isServoActive) {
+                skipFeeding();
             }
         });
     </script>
